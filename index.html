@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ===== SEO básico ===== -->
+  <title>Julio Alfonzo · Stand-Up Comedy</title>
+  <meta name="description" content="Sitio oficial de Julio Alfonzo, comediante de stand-up. Próximas fechas, shows en vivo, videos y contacto para contrataciones." />
+  <meta name="author" content="Julio Alfonzo" />
+  <meta name="theme-color" content="#0d0d0d" />
+
+  <!-- ===== Open Graph (compartir en redes / WhatsApp) ===== -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Julio Alfonzo · Stand-Up Comedy" />
+  <meta property="og:description" content="Próximas fechas, shows en vivo y videos. ¡Te espero en el show!" />
+  <meta property="og:image" content="img/og.jpg" />
+  <meta property="og:locale" content="es_ES" />
+
+  <!-- ===== Twitter Card ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Julio Alfonzo · Stand-Up Comedy" />
+  <meta name="twitter:description" content="Próximas fechas, shows en vivo y videos." />
+  <meta name="twitter:image" content="img/og.jpg" />
+
+  <!-- ===== Favicon (SVG en línea, sin archivo extra) ===== -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d0d0d'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='%23ffd400' font-family='Arial' font-weight='bold'>J</text></svg>" />
+
+  <!-- ===== Tipografías (un solo display para el toque de cartel) ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+
+  <!-- ===== Barra de navegación ===== -->
+  <header class="nav" id="inicio">
+    <a href="#inicio" class="nav__logo">JULIO<span>ALFONZO</span></a>
+    <nav class="nav__menu" aria-label="Navegación principal">
+      <a href="#fechas">Fechas</a>
+      <a href="#videos">Videos</a>
+      <a href="#bio">Bio</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="hero__contenido">
+      <p class="hero__kicker">Stand-Up Comedy</p>
+      <h1 class="hero__titulo">JULIO<br />ALFONZO</h1>
+      <p class="hero__lema">Comedia en vivo, sin filtro y sin guion de seguridad.</p>
+      <div class="hero__acciones">
+        <a href="#fechas" class="btn btn--primario">Ver próximas fechas</a>
+        <a href="#videos" class="btn btn--secundario">Mirar mi especial</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Próximas fechas (se rellena desde datos/shows.json) ===== -->
+  <section class="seccion" id="fechas">
+    <div class="seccion__cabecera">
+      <h2 class="seccion__titulo">Próximas fechas</h2>
+      <p class="seccion__subtitulo">Elige tu ciudad y asegura tu lugar.</p>
+    </div>
+
+    <!-- Aquí JavaScript inserta las tarjetas de cada show -->
+    <ul class="shows" id="lista-shows" aria-live="polite">
+      <li class="shows__cargando">Cargando fechas…</li>
+    </ul>
+  </section>
+
+  <!-- ===== Videos ===== -->
+  <section class="seccion seccion--alt" id="videos">
+    <div class="seccion__cabecera">
+      <h2 class="seccion__titulo">Videos</h2>
+      <p class="seccion__subtitulo">Un adelanto de lo que verás en vivo.</p>
+    </div>
+
+    <div class="videos">
+      <!-- Reemplaza VIDEO_ID por el ID real del video de YouTube -->
+      <div class="video">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+          title="Especial de comedia de Julio Alfonzo"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+      <div class="video">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/VIDEO_ID_2"
+          title="Clip de stand-up de Julio Alfonzo"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Bio ===== -->
+  <section class="seccion" id="bio">
+    <div class="bio">
+      <div class="bio__foto" role="img" aria-label="Foto de Julio Alfonzo"></div>
+      <div class="bio__texto">
+        <h2 class="seccion__titulo">Sobre Julio</h2>
+        <p>
+          Julio Alfonzo es comediante de stand-up. Sobre el escenario convierte lo
+          cotidiano en carcajadas: la familia, las relaciones y el absurdo del día a día.
+        </p>
+        <p>
+          Ha llevado su show por distintas ciudades y sigue sumando fechas.
+          <!-- Edita este texto con la bio real de Julio. -->
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contacto / Footer ===== -->
+  <footer class="footer" id="contacto">
+    <div class="footer__contenido">
+      <div class="footer__bloque">
+        <h2 class="footer__titulo">Contrataciones</h2>
+        <p>¿Quieres llevar el show a tu ciudad o evento?</p>
+        <!-- Reemplaza el número (formato internacional, sin signos) y el email -->
+        <a class="btn btn--whatsapp" href="https://wa.me/000000000000?text=Hola%20Julio,%20quiero%20contratar%20un%20show" target="_blank" rel="noopener">
+          Escribir por WhatsApp
+        </a>
+        <a class="footer__email" href="mailto:contacto@julioalfonzo.com">contacto@julioalfonzo.com</a>
+      </div>
+
+      <div class="footer__bloque">
+        <h2 class="footer__titulo">Redes</h2>
+        <nav class="footer__redes" aria-label="Redes sociales">
+          <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://tiktok.com/" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://youtube.com/" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://x.com/" target="_blank" rel="noopener">X</a>
+        </nav>
+      </div>
+    </div>
+
+    <p class="footer__copy">© <span id="anio"></span> Julio Alfonzo. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+/* =================================================================
+   Julio Alfonzo · Stand-Up
+   Estilo "cartel de comedia": fondo oscuro + acento amarillo.
+   Sin frameworks: CSS puro, ligero y responsive.
+   ================================================================= */
+
+/* ---------- Variables de tema ---------- */
+:root {
+  --negro: #0d0d0d;
+  --negro-suave: #161616;
+  --gris: #9a9a9a;
+  --blanco: #f5f5f5;
+  --acento: #ffd400;      /* amarillo cartel */
+  --acento-oscuro: #e0bb00;
+  --borde: #2a2a2a;
+
+  --fuente-display: "Anton", "Arial Narrow", sans-serif;
+  --fuente-texto: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --ancho-max: 1100px;
+  --radio: 14px;
+}
+
+/* ---------- Reseteo básico ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--negro);
+  color: var(--blanco);
+  font-family: var(--fuente-texto);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-block;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn--primario { background: var(--acento); color: var(--negro); }
+.btn--primario:hover { background: var(--acento-oscuro); }
+
+.btn--secundario { background: transparent; color: var(--blanco); border: 2px solid var(--borde); }
+.btn--secundario:hover { border-color: var(--acento); color: var(--acento); }
+
+.btn--whatsapp { background: #25d366; color: #062b16; }
+.btn--whatsapp:hover { background: #1fbf59; }
+
+/* Botón deshabilitado (show agotado o próximamente) */
+.btn--inactivo {
+  background: var(--negro-suave);
+  color: var(--gris);
+  border: 2px solid var(--borde);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---------- Navegación ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 5vw, 3rem);
+  background: rgba(13, 13, 13, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--borde);
+}
+.nav__logo {
+  font-family: var(--fuente-display);
+  font-size: 1.4rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+.nav__logo span { color: var(--acento); margin-left: 0.35rem; }
+
+.nav__menu { display: flex; gap: 1.5rem; }
+.nav__menu a {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--gris);
+  transition: color 0.15s ease;
+}
+.nav__menu a:hover { color: var(--acento); }
+
+/* ---------- Hero ---------- */
+.hero {
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  padding: 3rem clamp(1rem, 5vw, 3rem);
+  /* Degradado + foto de fondo. Reemplaza img/hero.jpg por la foto de Julio. */
+  background:
+    linear-gradient(180deg, rgba(13,13,13,0.55) 0%, rgba(13,13,13,0.92) 100%),
+    radial-gradient(1200px 600px at 70% 20%, rgba(255,212,0,0.10), transparent 60%),
+    var(--negro);
+  background-size: cover;
+  background-position: center;
+}
+.hero__contenido { max-width: var(--ancho-max); margin: 0 auto; width: 100%; }
+.hero__kicker {
+  color: var(--acento);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+.hero__titulo {
+  font-family: var(--fuente-display);
+  font-size: clamp(3.5rem, 14vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  margin-bottom: 1.2rem;
+}
+.hero__lema {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--gris);
+  max-width: 38ch;
+  margin-bottom: 2rem;
+}
+.hero__acciones { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+/* ---------- Secciones genéricas ---------- */
+.seccion { padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 3rem); }
+.seccion--alt { background: var(--negro-suave); }
+.seccion__cabecera { max-width: var(--ancho-max); margin: 0 auto 2.5rem; }
+.seccion__titulo {
+  font-family: var(--fuente-display);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1;
+}
+.seccion__titulo::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: var(--acento);
+  margin-top: 0.8rem;
+}
+.seccion__subtitulo { color: var(--gris); margin-top: 1rem; font-size: 1.05rem; }
+
+/* ---------- Lista de shows ---------- */
+.shows {
+  list-style: none;
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.shows__cargando, .shows__vacio { color: var(--gris); text-align: center; padding: 2rem; }
+
+.show {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--negro-suave);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.show:hover { border-color: var(--acento); transform: translateY(-2px); }
+
+/* Bloque de fecha (día + mes) */
+.show__fecha {
+  text-align: center;
+  min-width: 72px;
+  border-right: 1px solid var(--borde);
+  padding-right: 1.2rem;
+}
+.show__dia { font-family: var(--fuente-display); font-size: 2.4rem; line-height: 1; }
+.show__mes { text-transform: uppercase; letter-spacing: 0.15em; color: var(--acento); font-weight: 800; font-size: 0.8rem; }
+.show__anio { color: var(--gris); font-size: 0.75rem; }
+
+/* Datos del show */
+.show__info { min-width: 0; }
+.show__ciudad { font-size: 1.3rem; font-weight: 800; }
+.show__lugar { color: var(--gris); }
+.show__etiqueta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.show__etiqueta--gratis { background: rgba(37, 211, 102, 0.15); color: #25d366; }
+.show__etiqueta--pago { background: rgba(255, 212, 0, 0.15); color: var(--acento); }
+.show__etiqueta--agotado { background: rgba(255, 80, 80, 0.15); color: #ff6b6b; }
+
+/* Acción del show */
+.show__accion { white-space: nowrap; }
+
+/* ---------- Videos ---------- */
+.videos {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radio);
+  overflow: hidden;
+  border: 1px solid var(--borde);
+}
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* ---------- Bio ---------- */
+.bio {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.bio__foto {
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radio);
+  border: 1px solid var(--borde);
+  /* Reemplaza img/bio.jpg por la foto de Julio */
+  background:
+    linear-gradient(135deg, rgba(255,212,0,0.15), transparent),
+    var(--negro-suave);
+  background-size: cover;
+  background-position: center;
+}
+.bio__texto p { color: var(--gris); margin-top: 1rem; max-width: 60ch; }
+
+/* ---------- Footer ---------- */
+.footer {
+  background: var(--negro-suave);
+  border-top: 1px solid var(--borde);
+  padding: clamp(3rem, 8vw, 5rem) clamp(1rem, 5vw, 3rem) 2rem;
+}
+.footer__contenido {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem;
+}
+.footer__titulo { font-family: var(--fuente-display); font-size: 1.6rem; margin-bottom: 0.8rem; }
+.footer__bloque p { color: var(--gris); margin-bottom: 1rem; }
+.footer__bloque .btn { margin-bottom: 1rem; }
+.footer__email { display: block; color: var(--acento); font-weight: 600; }
+.footer__redes { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+.footer__redes a { font-weight: 600; color: var(--gris); transition: color 0.15s ease; }
+.footer__redes a:hover { color: var(--acento); }
+.footer__copy {
+  max-width: var(--ancho-max);
+  margin: 3rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--borde);
+  color: var(--gris);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  .nav__menu { display: none; } /* en móvil el menú se oculta; el logo lleva al inicio */
+  .show {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "fecha info"
+      "accion accion";
+    gap: 1rem;
+  }
+  .show__fecha { grid-area: fecha; }
+  .show__info  { grid-area: info; }
+  .show__accion { grid-area: accion; }
+  .show__accion .btn { width: 100%; }
+  .bio { grid-template-columns: 1fr; }
+  .bio__foto { max-width: 280px; }
+}
+
+/* Respeta a quien prefiere menos animación */
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
