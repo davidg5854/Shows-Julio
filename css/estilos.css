@@ -26,6 +26,12 @@
 
 html { scroll-behavior: smooth; }
 
+/* El menú es fijo: deja aire al saltar a una sección con el ancla */
+:target { scroll-margin-top: 90px; }
+
+/* Evita desbordes horizontales en cualquier pantalla */
+html, body { overflow-x: hidden; max-width: 100%; }
+
 body {
   background: var(--negro);
   color: var(--blanco);
@@ -104,6 +110,7 @@ a { color: inherit; text-decoration: none; }
 /* ---------- Hero ---------- */
 .hero {
   min-height: 88vh;
+  min-height: 88dvh; /* altura real en móviles (descuenta barras del navegador) */
   display: flex;
   align-items: center;
   padding: 3rem clamp(1rem, 5vw, 3rem);
@@ -275,6 +282,29 @@ a { color: inherit; text-decoration: none; }
 }
 .bio__texto p { color: var(--gris); margin-top: 1rem; max-width: 60ch; }
 
+/* ---------- Bloque de llamado a la acción (newsletter / podcast) ---------- */
+.cta {
+  text-align: center;
+  background:
+    radial-gradient(800px 300px at 50% 0%, rgba(255, 212, 0, 0.08), transparent 70%),
+    var(--negro);
+  border-top: 1px solid var(--borde);
+}
+.cta .seccion__titulo { display: inline-block; }
+.cta .seccion__titulo::after { margin-left: auto; margin-right: auto; }
+.cta__texto {
+  color: var(--gris);
+  max-width: 52ch;
+  margin: 1.2rem auto 2rem;
+  font-size: 1.05rem;
+}
+.cta__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
 /* ---------- Footer ---------- */
 .footer {
   background: var(--negro-suave);
@@ -306,8 +336,31 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ---------- Responsive ---------- */
+
+/* Tablet: la bio pasa a una sola columna */
+@media (max-width: 900px) {
+  .bio {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+  .bio__foto { max-width: 300px; margin: 0 auto; }
+  .bio__texto p { margin-left: auto; margin-right: auto; }
+}
+
+/* Móvil: nav apilada, tarjetas de show reorganizadas */
 @media (max-width: 720px) {
-  .nav__menu { display: none; } /* en móvil el menú se oculta; el logo lleva al inicio */
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.2rem;
+  }
+  .nav__menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem 1.2rem;
+    width: 100%;
+  }
   .show {
     grid-template-columns: auto 1fr;
     grid-template-areas:
@@ -319,8 +372,28 @@ a { color: inherit; text-decoration: none; }
   .show__info  { grid-area: info; }
   .show__accion { grid-area: accion; }
   .show__accion .btn { width: 100%; }
-  .bio { grid-template-columns: 1fr; }
-  .bio__foto { max-width: 280px; }
+}
+
+/* Móvil pequeño: ajustes finos para que nada se desborde */
+@media (max-width: 460px) {
+  .nav__menu { gap: 0.75rem 1rem; font-size: 0.9rem; }
+  .show {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "fecha"
+      "info"
+      "accion";
+    text-align: center;
+  }
+  .show__fecha {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 1px solid var(--borde);
+    padding-bottom: 0.6rem;
+    min-width: 0;
+  }
+  .cta__acciones .btn,
+  .hero__acciones .btn { width: 100%; }
 }
 
 /* Respeta a quien prefiere menos animación */
