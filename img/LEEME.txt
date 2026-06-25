@@ -1,19 +1,13 @@
 IMÁGENES DEL SITIO
 ==================
 
-Coloca aquí las imágenes y mantén estos nombres para que todo funcione sin
-tocar el código:
+Estas imágenes ya están cargadas y optimizadas para web. Si quieres cambiar
+alguna, mantén el mismo nombre y a poder ser un peso bajo (idealmente < 300 KB).
 
-1. hero.jpg   → Foto principal de Julio (fondo del encabezado).
-                Recomendado: horizontal, mínimo 1600 px de ancho.
-                Luego, en css/estilos.css, en la regla ".hero", añade la foto:
-                background-image incluyendo  url("../img/hero.jpg")
+- hero.jpg      → Foto de fondo de la portada (la primera que se ve).
+- bio.jpg       → Foto vertical de la sección "Sobre Julio".
+- og.jpg        → Imagen para compartir en redes/WhatsApp (1200 x 630 px).
+- galeria-1..6  → Fotos de la galería.
 
-2. bio.jpg    → Foto para la sección "Sobre Julio" (vertical, 3:4).
-                Actívala en css/estilos.css en la regla ".bio__foto".
-
-3. og.jpg     → Imagen para compartir en redes y WhatsApp (1200 x 630 px).
-                Ya está enlazada en index.html (meta og:image).
-
-Consejo: comprime las imágenes (por ejemplo en https://squoosh.app) para que
-el sitio siga siendo liviano y cargue rápido.
+Consejo: antes de subir una foto nueva, compáctala en https://squoosh.app
+para que el sitio cargue rápido.
