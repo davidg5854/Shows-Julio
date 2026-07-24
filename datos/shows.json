@@ -1,45 +1,22 @@
 [
   {
-    "fecha": "2026-07-18",
-    "ciudad": "Caracas",
-    "lugar": "Trasnocho Cultural",
+    "fecha": "2026-08-06",
+    "ciudad": "Buenos Aires",
+    "lugar": "Factoría Social Club · Fragata Sarmiento",
     "tipo": "pago",
     "estado": "disponible",
-    "entradas": "https://www.passline.com/",
-    "nota": "20:00 h"
+    "entradas": "https://compras.evento-simple.com/factoria/eventos/julio-y-sus-amigos-show-de-stand-up-e44",
+    "boton": "Entradas",
+    "nota": "Julio y Sus Amigos · 21:00"
   },
   {
-    "fecha": "2026-07-25",
-    "ciudad": "Valencia",
-    "lugar": "Teatro Municipal",
-    "tipo": "pago",
-    "estado": "disponible",
-    "entradas": "https://www.passline.com/"
-  },
-  {
-    "fecha": "2026-08-08",
-    "ciudad": "Maracaibo",
-    "lugar": "Centro de Arte Lía Bermúdez",
-    "tipo": "gratis",
-    "estado": "disponible",
-    "entradas": "https://tally.so/",
-    "boton": "Reservar cupo",
-    "nota": "Cupo limitado · 19:00 h"
-  },
-  {
-    "fecha": "2026-08-22",
-    "ciudad": "Mérida",
-    "lugar": "Teatro César Rengifo",
-    "tipo": "pago",
-    "estado": "agotado",
-    "entradas": "https://www.passline.com/"
-  },
-  {
-    "fecha": "2026-09-05",
+    "fecha": "2026-08-15",
     "ciudad": "Barquisimeto",
-    "lugar": "Por confirmar",
+    "lugar": "Andrea Chill & Bar",
     "tipo": "pago",
-    "estado": "proximamente",
-    "entradas": "https://www.passline.com/"
+    "estado": "disponible",
+    "entradas": "https://ticketplate.com/checkout/julio-y-sus-amigos-202608152100",
+    "boton": "Entradas",
+    "nota": "Julio y Sus Amigos · 21:00"
   }
 ]

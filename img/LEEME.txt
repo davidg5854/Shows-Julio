@@ -7,7 +7,6 @@ alguna, mantén el mismo nombre y a poder ser un peso bajo (idealmente < 300 KB)
 - hero.jpg      → Foto de fondo de la portada (la primera que se ve).
 - bio.jpg       → Foto vertical de la sección "Sobre Julio".
 - og.jpg        → Imagen para compartir en redes/WhatsApp (1200 x 630 px).
-- galeria-1..6  → Fotos de la galería.
 
 Consejo: antes de subir una foto nueva, compáctala en https://squoosh.app
 para que el sitio cargue rápido.
