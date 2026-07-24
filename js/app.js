@@ -60,7 +60,7 @@ function pintarShow(show) {
     // Texto del botón: personalizado, o por defecto según tipo
     const texto = show.boton || (gratis ? "Reservar gratis" : "Comprar entradas");
     const clase = gratis ? "btn--secundario" : "btn--primario";
-    accion = `<a class="btn ${clase}" href="${escapar(show.entradas)}" target="_blank" rel="noopener">${escapar(texto)}</a>`;
+    accion = `<a class="btn ${clase}" href="${escapar(show.entradas)}" target="_blank" rel="noopener" data-evento="entradas" data-ciudad="${escapar(show.ciudad)}">${escapar(texto)}</a>`;
   }
 
   const nota = show.nota ? `<div class="show__lugar">${escapar(show.nota)}</div>` : "";
@@ -109,6 +109,14 @@ async function cargarShows() {
 
     contenedor.innerHTML = proximos.map(pintarShow).join("");
     inyectarEventosSEO(proximos);
+
+    // Analítica: registra clics en "Entradas" con la ciudad del show
+    contenedor.addEventListener("click", (e) => {
+      const enlace = e.target.closest('a[data-evento="entradas"]');
+      if (enlace && typeof window.gtag === "function") {
+        window.gtag("event", "clic_entradas", { ciudad: enlace.dataset.ciudad });
+      }
+    });
   } catch (error) {
     console.error(error);
     contenedor.innerHTML = `<li class="shows__vacio">No pudimos cargar las fechas en este momento. Intenta recargar la página.</li>`;
