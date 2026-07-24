@@ -108,10 +108,52 @@ async function cargarShows() {
     }
 
     contenedor.innerHTML = proximos.map(pintarShow).join("");
+    inyectarEventosSEO(proximos);
   } catch (error) {
     console.error(error);
     contenedor.innerHTML = `<li class="shows__vacio">No pudimos cargar las fechas en este momento. Intenta recargar la página.</li>`;
   }
+}
+
+/**
+ * Genera datos estructurados (Schema.org ComedyEvent) de cada show y los
+ * inserta en el <head>. Ayuda a que Google muestre las fechas como eventos.
+ */
+function inyectarEventosSEO(shows) {
+  const eventos = shows.map((s) => {
+    const fecha = parsearFecha(s.fecha);
+    const inicio = new Date(fecha);
+    inicio.setHours(21, 0, 0, 0); // los shows suelen ser a las 21:00
+    return {
+      "@context": "https://schema.org",
+      "@type": "ComedyEvent",
+      "name": "Julio y Sus Amigos — Stand-Up de Julio Alfonzo",
+      "startDate": inicio.toISOString(),
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": s.lugar,
+        "address": { "@type": "PostalAddress", "addressLocality": s.ciudad },
+      },
+      "performer": { "@type": "Person", "name": "Julio Alfonzo" },
+      "organizer": { "@type": "Person", "name": "Julio Alfonzo" },
+      "url": s.entradas,
+      "offers": {
+        "@type": "Offer",
+        "url": s.entradas,
+        "availability":
+          s.estado === "agotado"
+            ? "https://schema.org/SoldOut"
+            : "https://schema.org/InStock",
+      },
+    };
+  });
+
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(eventos);
+  document.head.appendChild(script);
 }
 
 cargarShows();
