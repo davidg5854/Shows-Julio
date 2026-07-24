@@ -178,22 +178,32 @@ function cerrarMenu() {
   window.addEventListener("resize", ajustar);
 })();
 
-/* ---------- Cookies + Analytics (carga condicionada al consentimiento) ---------- */
-function cargarAnalytics() {
-  if (window.__analyticsCargado) return;
-  window.__analyticsCargado = true;
-
-  // Google Analytics (GA4)
+/* ---------- Analytics con Consent Mode (GA4) + Clarity ---------- */
+// GA4 se carga siempre, pero con el consentimiento DENEGADO por defecto:
+// no usa cookies ni rastrea al usuario hasta que acepta el aviso.
+(function () {
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  gtag("consent", "default", {
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    analytics_storage: "denied",
+    wait_for_update: 500,
+  });
   const ga = document.createElement("script");
   ga.async = true;
   ga.src = "https://www.googletagmanager.com/gtag/js?id=G-5J1C29QDH1";
   document.head.appendChild(ga);
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function () { window.dataLayer.push(arguments); };
-  window.gtag("js", new Date());
-  window.gtag("config", "G-5J1C29QDH1");
+  gtag("js", new Date());
+  gtag("config", "G-5J1C29QDH1");
+})();
 
-  // Microsoft Clarity (mapas de calor y grabaciones)
+// Microsoft Clarity: solo se carga tras aceptar (usa cookies de sesión).
+let clarityCargado = false;
+function cargarClarity() {
+  if (clarityCargado) return;
+  clarityCargado = true;
   (function (c, l, a, r, i, t, y) {
     c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
     t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
@@ -201,13 +211,26 @@ function cargarAnalytics() {
   })(window, document, "clarity", "script", "xrmdltqqya");
 }
 
+// Al aceptar: actualiza el consentimiento de GA (granted) y activa Clarity.
+function otorgarConsentimiento() {
+  if (typeof window.gtag === "function") {
+    window.gtag("consent", "update", {
+      ad_storage: "granted",
+      ad_user_data: "granted",
+      ad_personalization: "granted",
+      analytics_storage: "granted",
+    });
+  }
+  cargarClarity();
+}
+
+/* ---------- Aviso de cookies ---------- */
 (function () {
   const banner = document.getElementById("cookies");
   let consentimiento = null;
   try { consentimiento = localStorage.getItem("cookies-consent"); } catch (e) {}
 
-  // Si ya aceptó antes, cargamos analytics de una vez
-  if (consentimiento === "aceptar") cargarAnalytics();
+  if (consentimiento === "aceptar") otorgarConsentimiento();
 
   if (!banner) return;
 
@@ -222,7 +245,7 @@ function cargarAnalytics() {
     const decision = btn.dataset.cookie;
     try { localStorage.setItem("cookies-consent", decision); } catch (e) {}
     banner.classList.remove("visible");
-    if (decision === "aceptar") cargarAnalytics();
+    if (decision === "aceptar") otorgarConsentimiento();
   });
 })();
 
