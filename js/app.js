@@ -1,100 +1,70 @@
 /* =================================================================
    Julio Alfonzo · Stand-Up
-   Lógica del sitio: carga las fechas desde datos/shows.json y las
-   pinta en pantalla. Sin librerías, JavaScript puro.
+   Sitio estático sin librerías. Carga las fechas desde
+   datos/shows.json y maneja navegación, menú móvil y cookies.
+   Analytics (GA4 + Clarity) SOLO se cargan si el usuario acepta.
    ================================================================= */
 
-// Año actual en el footer
-document.getElementById("anio").textContent = new Date().getFullYear();
+/* ---------- Fechas ---------- */
+const MESES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 
-// Meses abreviados en español (para el bloque de fecha)
-const MESES = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
-
-/**
- * Convierte "2026-08-15" en un objeto Date local (sin desfase de zona horaria).
- */
+// Convierte "2026-08-15" en Date local (sin desfase de zona horaria)
 function parsearFecha(iso) {
   const [anio, mes, dia] = iso.split("-").map(Number);
   return new Date(anio, mes - 1, dia);
 }
 
-/**
- * Escapa texto para evitar inyección de HTML al construir las tarjetas.
- */
+// Escapa texto para evitar inyección de HTML
 function escapar(texto) {
   const div = document.createElement("div");
   div.textContent = texto == null ? "" : String(texto);
   return div.innerHTML;
 }
 
-/**
- * Construye el HTML de una tarjeta de show.
- */
+// Construye el HTML de una tarjeta (ticket) de show
 function pintarShow(show) {
   const fecha = parsearFecha(show.fecha);
   const dia = String(fecha.getDate()).padStart(2, "0");
   const mes = MESES[fecha.getMonth()];
-  const anio = fecha.getFullYear();
 
   const agotado = show.estado === "agotado";
   const proximamente = show.estado === "proximamente";
-  const gratis = show.tipo === "gratis";
 
-  // Etiqueta (gratis / paga / agotado)
-  let etiqueta;
-  if (agotado) {
-    etiqueta = `<span class="show__etiqueta show__etiqueta--agotado">Agotado</span>`;
-  } else if (gratis) {
-    etiqueta = `<span class="show__etiqueta show__etiqueta--gratis">Entrada gratis</span>`;
-  } else {
-    etiqueta = `<span class="show__etiqueta show__etiqueta--pago">Entrada paga</span>`;
-  }
+  let estado;
+  if (agotado) estado = "Agotado";
+  else if (proximamente) estado = "Próximamente";
+  else estado = show.tipo === "gratis" ? "Entrada gratis" : "Entradas a la venta";
 
-  // Botón de acción según el estado del show
+  const lugar = escapar(show.lugar) + (show.hora ? " · " + escapar(show.hora) : "");
+
   let accion;
-  if (agotado) {
-    accion = `<span class="btn btn--inactivo">Agotado</span>`;
-  } else if (proximamente) {
-    accion = `<span class="btn btn--inactivo">Próximamente</span>`;
+  if (agotado || proximamente) {
+    accion = `<span class="btn btn--linea" aria-disabled="true">${estado}</span>`;
   } else {
-    // Texto del botón: personalizado, o por defecto según tipo
-    const texto = show.boton || (gratis ? "Reservar gratis" : "Comprar entradas");
-    const clase = gratis ? "btn--secundario" : "btn--primario";
-    accion = `<a class="btn ${clase}" href="${escapar(show.entradas)}" target="_blank" rel="noopener" data-evento="entradas" data-ciudad="${escapar(show.ciudad)}">${escapar(texto)}</a>`;
+    const texto = show.boton || (show.tipo === "gratis" ? "Reservar gratis" : "Entradas");
+    accion = `<a class="btn btn--rojo" href="${escapar(show.entradas)}" target="_blank" rel="noopener" data-evento="entradas" data-ciudad="${escapar(show.ciudad)}">${escapar(texto)}</a>`;
   }
-
-  const nota = show.nota ? `<div class="show__lugar">${escapar(show.nota)}</div>` : "";
 
   return `
-    <li class="show">
-      <div class="show__fecha">
-        <div class="show__dia">${dia}</div>
-        <div class="show__mes">${mes}</div>
-        <div class="show__anio">${anio}</div>
+    <article class="ticket">
+      <div class="ticket__fecha"><div class="ticket__dia">${dia}</div><div class="ticket__mes">${mes}</div></div>
+      <div class="ticket__info">
+        <div class="ticket__ciudad">${escapar(show.ciudad)}</div>
+        <div class="ticket__lugar">${lugar}</div>
+        <span class="ticket__estado">${escapar(estado)}</span>
       </div>
-      <div class="show__info">
-        <div class="show__ciudad">${escapar(show.ciudad)}</div>
-        <div class="show__lugar">${escapar(show.lugar)}</div>
-        ${nota}
-        ${etiqueta}
-      </div>
-      <div class="show__accion">${accion}</div>
-    </li>
-  `;
+      <div class="ticket__acc">${accion}</div>
+    </article>`;
 }
 
-/**
- * Carga el JSON, filtra fechas pasadas, ordena y pinta la lista.
- */
 async function cargarShows() {
-  const contenedor = document.getElementById("lista-shows");
-
+  const contenedor = document.getElementById("fechas-lista");
+  if (!contenedor) return;
   try {
     const respuesta = await fetch("datos/shows.json", { cache: "no-cache" });
     if (!respuesta.ok) throw new Error("No se pudo cargar shows.json");
     const shows = await respuesta.json();
 
-    // Mostrar solo fechas de hoy en adelante
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
 
@@ -103,14 +73,14 @@ async function cargarShows() {
       .sort((a, b) => parsearFecha(a.fecha) - parsearFecha(b.fecha));
 
     if (proximos.length === 0) {
-      contenedor.innerHTML = `<li class="shows__vacio">Pronto anunciaremos nuevas fechas. ¡Sígueme en redes!</li>`;
+      contenedor.innerHTML = `<p class="ticket__vacio">Pronto anunciamos nuevas fechas. ¡Seguime en redes!</p>`;
       return;
     }
 
     contenedor.innerHTML = proximos.map(pintarShow).join("");
     inyectarEventosSEO(proximos);
 
-    // Analítica: registra clics en "Entradas" con la ciudad del show
+    // Analítica: clic en "Entradas" (solo si GA está cargado por consentimiento)
     contenedor.addEventListener("click", (e) => {
       const enlace = e.target.closest('a[data-evento="entradas"]');
       if (enlace && typeof window.gtag === "function") {
@@ -119,19 +89,17 @@ async function cargarShows() {
     });
   } catch (error) {
     console.error(error);
-    contenedor.innerHTML = `<li class="shows__vacio">No pudimos cargar las fechas en este momento. Intenta recargar la página.</li>`;
+    contenedor.innerHTML = `<p class="ticket__vacio">No pudimos cargar las fechas. Intentá recargar la página.</p>`;
   }
 }
 
-/**
- * Genera datos estructurados (Schema.org ComedyEvent) de cada show y los
- * inserta en el <head>. Ayuda a que Google muestre las fechas como eventos.
- */
+// Datos estructurados (Schema.org ComedyEvent) de cada show para buscadores
 function inyectarEventosSEO(shows) {
   const eventos = shows.map((s) => {
     const fecha = parsearFecha(s.fecha);
     const inicio = new Date(fecha);
-    inicio.setHours(21, 0, 0, 0); // los shows suelen ser a las 21:00
+    const [h, m] = (s.hora || "21:00").split(":").map(Number);
+    inicio.setHours(h || 21, m || 0, 0, 0);
     return {
       "@context": "https://schema.org",
       "@type": "ComedyEvent",
@@ -150,18 +118,112 @@ function inyectarEventosSEO(shows) {
       "offers": {
         "@type": "Offer",
         "url": s.entradas,
-        "availability":
-          s.estado === "agotado"
-            ? "https://schema.org/SoldOut"
-            : "https://schema.org/InStock",
+        "availability": s.estado === "agotado"
+          ? "https://schema.org/SoldOut"
+          : "https://schema.org/InStock",
       },
     };
   });
-
   const script = document.createElement("script");
   script.type = "application/ld+json";
   script.textContent = JSON.stringify(eventos);
   document.head.appendChild(script);
 }
+
+/* ---------- Navegación con scroll suave (sin cambiar el hash) ---------- */
+(function () {
+  const nav = document.querySelector(".nav");
+  document.addEventListener("click", function (e) {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute("href");
+    if (!id || id.length < 2) return;
+    const destino = document.querySelector(id);
+    if (!destino) return;
+    e.preventDefault();
+    const offset = nav ? nav.offsetHeight : 0;
+    const y = destino.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+    cerrarMenu();
+  });
+})();
+
+/* ---------- Menú móvil (hamburguesa) ---------- */
+function cerrarMenu() {
+  const menu = document.getElementById("menu");
+  const toggle = document.querySelector(".nav__toggle");
+  if (menu && menu.classList.contains("open")) {
+    menu.classList.remove("open");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  }
+}
+(function () {
+  const toggle = document.querySelector(".nav__toggle");
+  const menu = document.getElementById("menu");
+  if (!toggle || !menu) return;
+  toggle.addEventListener("click", function () {
+    const abierto = menu.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", abierto ? "true" : "false");
+  });
+})();
+
+/* ---------- Ajusta el offset de las anclas a la altura de la barra ---------- */
+(function () {
+  const nav = document.querySelector(".nav");
+  if (!nav) return;
+  function ajustar() {
+    document.documentElement.style.scrollPaddingTop = nav.offsetHeight + "px";
+  }
+  ajustar();
+  window.addEventListener("resize", ajustar);
+})();
+
+/* ---------- Cookies + Analytics (carga condicionada al consentimiento) ---------- */
+function cargarAnalytics() {
+  if (window.__analyticsCargado) return;
+  window.__analyticsCargado = true;
+
+  // Google Analytics (GA4)
+  const ga = document.createElement("script");
+  ga.async = true;
+  ga.src = "https://www.googletagmanager.com/gtag/js?id=G-5J1C29QDH1";
+  document.head.appendChild(ga);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  window.gtag("js", new Date());
+  window.gtag("config", "G-5J1C29QDH1");
+
+  // Microsoft Clarity (mapas de calor y grabaciones)
+  (function (c, l, a, r, i, t, y) {
+    c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+    t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+    y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+  })(window, document, "clarity", "script", "xrmdltqqya");
+}
+
+(function () {
+  const banner = document.getElementById("cookies");
+  let consentimiento = null;
+  try { consentimiento = localStorage.getItem("cookies-consent"); } catch (e) {}
+
+  // Si ya aceptó antes, cargamos analytics de una vez
+  if (consentimiento === "aceptar") cargarAnalytics();
+
+  if (!banner) return;
+
+  // Mostrar el aviso solo si aún no decidió
+  if (!consentimiento) {
+    setTimeout(function () { banner.classList.add("visible"); }, 700);
+  }
+
+  banner.addEventListener("click", function (e) {
+    const btn = e.target.closest("[data-cookie]");
+    if (!btn) return;
+    const decision = btn.dataset.cookie;
+    try { localStorage.setItem("cookies-consent", decision); } catch (e) {}
+    banner.classList.remove("visible");
+    if (decision === "aceptar") cargarAnalytics();
+  });
+})();
 
 cargarShows();

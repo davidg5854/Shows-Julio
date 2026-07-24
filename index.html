@@ -4,31 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ===== Google Analytics (GA4) ===== -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5J1C29QDH1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-5J1C29QDH1');
-  </script>
-
-  <!-- ===== Microsoft Clarity (mapas de calor y grabaciones) ===== -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xrmdltqqya");
-  </script>
-
   <!-- ===== SEO ===== -->
   <title>Julio Alfonzo · Comediante de Stand-Up | Shows en vivo</title>
   <meta name="description" content="Julio Alfonzo, comediante de stand-up venezolano radicado en Buenos Aires. Fechas de su show «Julio y Sus Amigos», entradas, videos y contacto para contrataciones." />
   <meta name="keywords" content="Julio Alfonzo, comediante, stand up, stand-up comedy, comedia en vivo, comediante venezolano, Buenos Aires, Julio y Sus Amigos, humor, shows de comedia, entradas, El Hueco, Entregrados" />
   <meta name="author" content="Julio Alfonzo" />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#0d0d0d" />
+  <meta name="theme-color" content="#0e0e0e" />
   <link rel="canonical" href="https://julioalfonzo.com/" />
 
   <!-- ===== Open Graph (compartir en redes / WhatsApp) ===== -->
@@ -72,116 +54,104 @@
   </script>
 
   <!-- ===== Favicon (SVG en línea, sin archivo extra) ===== -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d0d0d'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='%23ffd400' font-family='Arial' font-weight='bold'>J</text></svg>" />
-
-  <!-- ===== Tipografías (un solo display para el toque de cartel) ===== -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230e0e0e'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='%23e5372b' font-family='Arial' font-weight='bold'>J</text></svg>" />
 
   <link rel="stylesheet" href="css/estilos.css" />
 </head>
 <body>
 
-  <!-- ===== Barra de navegación ===== -->
-  <header class="nav" id="inicio">
-    <a href="#inicio" class="nav__logo">JULIO<span>ALFONZO</span></a>
-    <nav class="nav__menu" aria-label="Navegación principal">
-      <a href="#fechas">Fechas</a>
-      <a href="#bio">Bio</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
-  </header>
+<nav class="nav">
+  <a class="nav__logo" href="#inicio">JULIO <b>ALFONZO</b></a>
+  <button class="nav__toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav__links" id="menu">
+    <a href="#inicio">Inicio</a><a href="#fechas">Fechas</a><a href="#sobre">Bio</a><a href="#news">Newsletter</a><a href="#contacto">Contacto</a>
+  </div>
+</nav>
 
-  <!-- ===== Hero ===== -->
-  <section class="hero">
-    <div class="hero__contenido">
-      <p class="hero__kicker">Stand-Up Comedy</p>
-      <h1 class="hero__titulo">JULIO<br />ALFONZO</h1>
-      <p class="hero__lema">Hago chistes. Escribo cosas.</p>
-      <div class="hero__acciones">
-        <a href="#fechas" class="btn btn--primario">Ver próximas fechas</a>
-        <a href="https://www.youtube.com/@julitoalfonzo" class="btn btn--secundario" target="_blank" rel="noopener">Canal de YouTube</a>
+<header class="cartel" id="inicio">
+  <div class="cartel__bg" style="background-image:url('img/hero.jpg')"></div>
+  <div class="cartel__marco">
+    <span class="cartel__eyebrow">Julio y Sus Amigos · Stand-Up</span>
+    <h1 class="cartel__nombre display">Julio<span>Alfonzo</span></h1>
+    <div class="cartel__cta">
+      <a href="#fechas" class="btn btn--rojo">Ver fechas</a>
+      <a href="https://www.youtube.com/@julitoalfonzo" target="_blank" rel="noopener" class="btn btn--linea">Canal de YouTube</a>
+    </div>
+  </div>
+</header>
+
+<div class="marquesina" aria-hidden="true">
+  <div class="marquesina__pista display">
+    <span>Julio y Sus Amigos ✦</span><span>Stand-Up en vivo ✦</span><span>Buenos Aires ✦</span><span>Barquisimeto ✦</span><span>Comedia venezolana ✦</span>
+    <span>Julio y Sus Amigos ✦</span><span>Stand-Up en vivo ✦</span><span>Buenos Aires ✦</span><span>Barquisimeto ✦</span><span>Comedia venezolana ✦</span>
+    <span>Julio y Sus Amigos ✦</span><span>Stand-Up en vivo ✦</span><span>Buenos Aires ✦</span><span>Barquisimeto ✦</span><span>Comedia venezolana ✦</span>
+    <span>Julio y Sus Amigos ✦</span><span>Stand-Up en vivo ✦</span><span>Buenos Aires ✦</span><span>Barquisimeto ✦</span><span>Comedia venezolana ✦</span>
+  </div>
+</div>
+
+<section class="seccion" id="fechas">
+  <h2 class="titulo display">Próximas <em>fechas</em></h2>
+  <p class="subt">Julio y Sus Amigos · asegura tu lugar</p>
+  <div class="fechas" id="fechas-lista" aria-live="polite">
+    <p class="ticket__cargando">Cargando fechas…</p>
+  </div>
+</section>
+
+<section class="sobre" id="sobre">
+  <div class="sobre__grid">
+    <div class="sobre__foto"><img src="img/bio.jpg" alt="Julio Alfonzo" /></div>
+    <div>
+      <blockquote class="sobre__cita">“Baila bien, cocina rico y es <b>buen muchacho</b>”<cite>— Mi mamá</cite></blockquote>
+      <div class="sobre__texto">
+        <p>¡Hola! Soy Julio Alfonzo, comediante venezolano residenciado en Buenos Aires. Escribí shows de internet como <em>Entregrados</em> y soy parte creativa y de producción de <em>El Hueco</em>, el podcast de comedia de Manuel Ángel Redondo y Gabo Ruiz.</p>
+        <p>También escribí 2 episodios de <em>La Cueva</em>, una serie web de 7 episodios que se estrena este año, con varios de mis comediantes favoritos de Venezuela y Argentina.</p>
+        <p>Actualmente tengo mi propio show, <strong>Julio y Sus Amigos</strong>, cada dos semanas en Factoría, Buenos Aires.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ===== Próximas fechas (se rellena desde datos/shows.json) ===== -->
-  <section class="seccion" id="fechas">
-    <div class="seccion__cabecera">
-      <h2 class="seccion__titulo">Próximas fechas</h2>
-      <p class="seccion__subtitulo">Elige tu ciudad y asegura tu lugar.</p>
+<section class="news" id="news">
+  <div class="news__in">
+    <h2 class="titulo display">¿Quieres <em>más</em>?</h2>
+    <p>Julio escribe en su newsletter y tiene un canal de YouTube. Suscríbete y no te pierdas nada entre show y show.</p>
+    <div class="news__acc">
+      <a class="btn btn--rojo" href="https://esjulioalfonzo.substack.com" target="_blank" rel="noopener">Suscríbete a mi newsletter</a>
+      <a class="btn btn--linea" href="https://www.youtube.com/@julitoalfonzo" target="_blank" rel="noopener">Canal de YouTube</a>
     </div>
+  </div>
+</section>
 
-    <!-- Aquí JavaScript inserta las tarjetas de cada show -->
-    <ul class="shows" id="lista-shows" aria-live="polite">
-      <li class="shows__cargando">Cargando fechas…</li>
-    </ul>
-  </section>
-
-  <!-- ===== Bio ===== -->
-  <section class="seccion seccion--alt" id="bio">
-    <div class="bio">
-      <div class="bio__foto" role="img" aria-label="Foto de Julio Alfonzo"></div>
-      <div class="bio__texto">
-        <h2 class="seccion__titulo">Sobre Julio</h2>
-        <p>
-          ¡Hola! Soy Julio Alfonzo, comediante venezolano residenciado en Buenos Aires.
-          Escribí shows de internet como <em>Entregrados</em> y soy parte creativa y de
-          producción de <em>El Hueco</em>, el podcast de comedia y show de stand-up de
-          Manuel Ángel Redondo y Gabo Ruiz.
-        </p>
-        <p>
-          También escribí 2 episodios y fui parte fundamental de la producción de
-          <em>La Cueva</em>, una serie web de 7 episodios que se estrena este año, con
-          varios de mis comediantes favoritos de Venezuela y Argentina.
-        </p>
-        <p>
-          Actualmente tengo mi propio show de comedia, <strong>Julio y Sus Amigos</strong>,
-          que presento cada dos semanas en Factoría, un bar en Buenos Aires en Fragata Sarmiento.
-        </p>
+<footer id="contacto">
+  <div class="pie">
+    <div>
+      <h3>Contacto</h3>
+      <p>Para shows, contrataciones y consultas:</p>
+      <a class="pie__mail" href="mailto:contacto@julioalfonzo.com">contacto@julioalfonzo.com</a>
+    </div>
+    <div>
+      <h3>Redes</h3>
+      <div class="pie__redes">
+        <a href="https://www.instagram.com/esjulioalfonzo" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+        <a href="https://www.youtube.com/@julitoalfonzo" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+        <a href="https://www.facebook.com/share/18hyE2Q61d/" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647z"/></svg></a>
+        <a href="https://www.threads.net/@esjulioalfonzo" target="_blank" rel="noopener" aria-label="Threads" title="Threads"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.291 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.166 1.43 1.781 3.631 2.695 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65z"/></svg></a>
+        <a href="https://esjulioalfonzo.substack.com" target="_blank" rel="noopener" aria-label="Newsletter en Substack" title="Newsletter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg></a>
       </div>
     </div>
-  </section>
+  </div>
+  <div class="pie__copy">© 2026 Julio Alfonzo · Stand-Up Comedy</div>
+</footer>
 
-  <!-- ===== Newsletter / Más de Julio ===== -->
-  <section class="seccion cta" id="newsletter">
-    <div class="seccion__cabecera" style="margin-bottom: 0;">
-      <h2 class="seccion__titulo">¿Quieres más?</h2>
-    </div>
-    <p class="cta__texto">
-      Julio escribe en su newsletter y produce <em>El Hueco Podcast</em>.
-      Suscríbete y no te pierdas nada entre show y show.
-    </p>
-    <div class="cta__acciones">
-      <a class="btn btn--primario" href="https://esjulioalfonzo.substack.com" target="_blank" rel="noopener">Suscríbete a mi newsletter</a>
-      <a class="btn btn--secundario" href="https://www.instagram.com/elhuecopodcast" target="_blank" rel="noopener">El Hueco Podcast</a>
-    </div>
-  </section>
-
-  <!-- ===== Contacto / Footer ===== -->
-  <footer class="footer" id="contacto">
-    <div class="footer__contenido">
-      <div class="footer__bloque">
-        <h2 class="footer__titulo">Contacto</h2>
-        <p>Para shows, contrataciones y consultas:</p>
-        <a class="footer__email" href="mailto:contacto@julioalfonzo.com">contacto@julioalfonzo.com</a>
-      </div>
-
-      <div class="footer__bloque">
-        <h2 class="footer__titulo">Redes</h2>
-        <nav class="footer__redes" aria-label="Redes sociales">
-          <a href="https://www.instagram.com/esjulioalfonzo" target="_blank" rel="noopener">Instagram</a>
-          <a href="https://www.youtube.com/@julitoalfonzo" target="_blank" rel="noopener">YouTube</a>
-          <a href="https://www.facebook.com/share/18hyE2Q61d/" target="_blank" rel="noopener">Facebook</a>
-          <a href="https://www.threads.net/@esjulioalfonzo" target="_blank" rel="noopener">Threads</a>
-          <a href="https://esjulioalfonzo.substack.com" target="_blank" rel="noopener">Newsletter</a>
-        </nav>
-      </div>
-    </div>
-
-    <p class="footer__copy">© <span id="anio"></span> Julio Alfonzo. Todos los derechos reservados.</p>
-  </footer>
+<div class="cookies" id="cookies" role="dialog" aria-label="Aviso de cookies">
+  <p>Usamos cookies para medir el tráfico y mejorar el sitio. Puedes aceptarlas o rechazarlas.</p>
+  <div class="cookies__btns">
+    <button class="btn btn--linea" type="button" data-cookie="rechazar">Rechazar</button>
+    <button class="btn btn--rojo" type="button" data-cookie="aceptar">Aceptar</button>
+  </div>
+</div>
 
   <script src="js/app.js" defer></script>
 </body>
