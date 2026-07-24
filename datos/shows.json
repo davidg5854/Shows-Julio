@@ -6,6 +6,7 @@
     "hora": "21:00",
     "tipo": "pago",
     "estado": "disponible",
+    "etiqueta": "Reservas gratis",
     "entradas": "https://compras.evento-simple.com/factoria/eventos/julio-y-sus-amigos-show-de-stand-up-e44",
     "boton": "Entradas"
   },

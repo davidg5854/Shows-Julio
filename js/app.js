@@ -33,7 +33,7 @@ function pintarShow(show) {
   let estado;
   if (agotado) estado = "Agotado";
   else if (proximamente) estado = "Próximamente";
-  else estado = show.tipo === "gratis" ? "Entrada gratis" : "Entradas a la venta";
+  else estado = show.etiqueta || (show.tipo === "gratis" ? "Entrada gratis" : "Entradas a la venta");
 
   const lugar = escapar(show.lugar) + (show.hora ? " · " + escapar(show.hora) : "");
 
