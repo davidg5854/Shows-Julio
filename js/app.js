@@ -211,7 +211,24 @@ function cargarClarity() {
   })(window, document, "clarity", "script", "xrmdltqqya");
 }
 
-// Al aceptar: actualiza el consentimiento de GA (granted) y activa Clarity.
+// Meta Pixel (Facebook): solo se carga tras aceptar (usa cookies de terceros).
+let pixelMetaCargado = false;
+function cargarPixelMeta() {
+  if (pixelMetaCargado) return;
+  pixelMetaCargado = true;
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0";
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+  }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+  window.fbq("init", "2116210522579728");
+  window.fbq("track", "PageView");
+}
+
+// Al aceptar: actualiza el consentimiento de GA (granted) y activa Clarity + Meta.
 function otorgarConsentimiento() {
   if (typeof window.gtag === "function") {
     window.gtag("consent", "update", {
@@ -222,6 +239,7 @@ function otorgarConsentimiento() {
     });
   }
   cargarClarity();
+  cargarPixelMeta();
 }
 
 /* ---------- Aviso de cookies ---------- */

@@ -11,6 +11,16 @@
     "boton": "Entradas"
   },
   {
+    "fecha": "2026-08-13",
+    "ciudad": "La Previa",
+    "lugar": "C.C. Guadalupe",
+    "hora": "21:00",
+    "tipo": "pago",
+    "estado": "disponible",
+    "entradas": "https://wa.link/nd9y4f",
+    "boton": "Entradas"
+  },
+  {
     "fecha": "2026-08-15",
     "ciudad": "Barquisimeto",
     "lugar": "Andrea Chill & Bar",
