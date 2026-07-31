@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Promover a producción · Julio Alfonzo</title>
+  <style>
+    :root { --tinta:#0e0e0e; --tinta2:#1a1a1a; --hueso:#ece2cd; --rojo:#e5372b; --humo:#a9a9a9; --borde:#333; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--tinta); color:var(--hueso); font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+      line-height:1.6; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:1.5rem; }
+    .caja { max-width:560px; width:100%; background:var(--tinta2); border:1px solid var(--borde); border-radius:14px; padding:2rem; }
+    h1 { font-size:1.5rem; margin-bottom:0.4rem; }
+    h1 span { color:var(--rojo); }
+    p { color:var(--humo); margin-bottom:1rem; }
+    ol { color:var(--humo); margin:0 0 1.4rem 1.1rem; }
+    ol li { margin-bottom:0.4rem; }
+    .btn { display:block; text-align:center; background:var(--rojo); color:#fff; font-weight:800; text-transform:uppercase;
+      letter-spacing:0.04em; padding:1rem 1.2rem; border-radius:10px; text-decoration:none; transition:background .2s; }
+    .btn:hover { background:#c22a20; }
+    .sec { display:block; text-align:center; color:var(--humo); text-decoration:none; margin-top:1rem; font-size:0.9rem; }
+    .sec:hover { color:var(--rojo); }
+    .nota { font-size:0.85rem; border-top:1px solid var(--borde); margin-top:1.5rem; padding-top:1rem; }
+    code { background:#000; padding:0.1rem 0.4rem; border-radius:5px; color:var(--hueso); }
+  </style>
+</head>
+<body>
+  <div class="caja">
+    <h1>Promover a <span>producción</span></h1>
+    <p>Esto lleva lo que probaste en <strong>staging</strong> a la web real
+      (<strong>julioalfonzo.com</strong>), a través de un PR.</p>
+    <ol>
+      <li>Tocá el botón: se abre GitHub con el PR ya armado (de <code>staging</code> a <code>main</code>).</li>
+      <li>Dale <strong>“Create pull request”</strong>.</li>
+      <li>Después <strong>“Merge pull request”</strong> → <strong>“Confirm merge”</strong>.</li>
+      <li>En 1-2 min la web real queda actualizada. ✅</li>
+    </ol>
+    <a class="btn" href="https://github.com/davidg5854/Shows-Julio/compare/main...staging?expand=1&title=Promover%20a%20producci%C3%B3n" target="_blank" rel="noopener">Crear PR de promoción →</a>
+    <a class="sec" href="https://julio-staging.pages.dev/" target="_blank" rel="noopener">Ver primero el sitio de prueba ↗</a>
+    <a class="sec" href="index.html">← Volver al panel</a>
+    <p class="nota">¿No hay nada para promover? Significa que staging y producción ya están iguales (no hay cambios pendientes). 👌</p>
+  </div>
+</body>
+</html>

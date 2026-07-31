@@ -3,7 +3,7 @@ name: Desplegar en GitHub Pages
 
 on:
   push:
-    branches: ["claude/sitio-shows-stand-up-s60meu"]
+    branches: ["main"]
   workflow_dispatch:
 
 # Permisos necesarios para publicar en Pages
