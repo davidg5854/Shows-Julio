@@ -5,9 +5,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Panel de edición · Julio Alfonzo</title>
+  <style>
+    /* Barra flotante con los accesos a cada sitio y la promoción */
+    #barra-julio {
+      position: fixed; right: 12px; bottom: 12px; z-index: 2147483000;
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    #barra-julio a, #barra-julio button {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #1a1a1a; color: #ece2cd; border: 1px solid #444; border-radius: 999px;
+      padding: 7px 13px; font-size: 12px; font-weight: 700; text-decoration: none;
+      cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,.4); transition: background .2s, border-color .2s;
+    }
+    #barra-julio a:hover, #barra-julio button:hover { background: #2a2a2a; border-color: #e5372b; }
+    #barra-julio .promover { background: #e5372b; border-color: #e5372b; color: #fff; }
+    #barra-julio .promover:hover { background: #c22a20; }
+    #barra-julio .oculto { display: none; }
+    @media (max-width: 600px) { #barra-julio { left: 12px; justify-content: center; } }
+  </style>
 </head>
 <body>
-  <!-- Sveltia CMS: panel para editar el contenido del sitio -->
+  <!-- Panel para editar el contenido del sitio -->
   <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+
+  <!-- Accesos rápidos -->
+  <div id="barra-julio">
+    <a href="https://julio-staging.pages.dev/" target="_blank" rel="noopener" title="Ver los cambios que aún no están publicados">🧪 Sitio de prueba</a>
+    <a href="https://julioalfonzo.com/" target="_blank" rel="noopener" title="La web que ve el público">🌐 Sitio real</a>
+    <button type="button" class="promover" id="btn-promover" title="Pasar los cambios de prueba a la web real">🚀 Promover</button>
+  </div>
+
+  <script>
+    // URL del servicio que publica los cambios (worker). Si está vacía,
+    // el botón abre la página con las instrucciones paso a paso.
+    var URL_PROMOTOR = "";
+
+    (function () {
+      var btn = document.getElementById("btn-promover");
+      if (!btn) return;
+
+      btn.addEventListener("click", async function () {
+        if (!URL_PROMOTOR) { window.location.href = "promover.html"; return; }
+
+        var clave = localStorage.getItem("clave-promover");
+        if (!clave) {
+          clave = prompt("Clave para publicar (se guarda en este navegador):");
+          if (!clave) return;
+        }
+        if (!confirm("¿Publicar en julioalfonzo.com los cambios que probaste?")) return;
+
+        var textoOriginal = btn.textContent;
+        btn.textContent = "⏳ Publicando...";
+        btn.disabled = true;
+        try {
+          var r = await fetch(URL_PROMOTOR, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ clave: clave }),
+          });
+          var d = await r.json();
+          if (d.ok) {
+            localStorage.setItem("clave-promover", clave);
+            alert(d.estado === "sin-cambios"
+              ? "No había cambios nuevos: la web real ya está al día. 👌"
+              : "¡Listo! En 1 o 2 minutos los cambios estarán en julioalfonzo.com 🎉");
+          } else {
+            if (r.status === 401) localStorage.removeItem("clave-promover");
+            alert("No se pudo publicar: " + (d.error || "error desconocido"));
+          }
+        } catch (e) {
+          alert("No se pudo conectar con el servicio de publicación.");
+        }
+        btn.textContent = textoOriginal;
+        btn.disabled = false;
+      });
+    })();
+  </script>
 </body>
 </html>

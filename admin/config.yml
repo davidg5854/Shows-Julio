@@ -17,7 +17,7 @@ public_folder: "/img"
 
 # Mensaje de los commits que genera el panel
 site_url: https://julioalfonzo.com
-display_url: https://julio-staging.pages.dev
+display_url: https://julioalfonzo.com
 
 collections:
   # ---------- Fechas / Shows ----------
