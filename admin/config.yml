@@ -4,7 +4,7 @@
 backend:
   name: github
   repo: davidg5854/Shows-Julio
-  branch: claude/sitio-shows-stand-up-s60meu
+  branch: staging
   # URL del servicio de autenticación (worker de Cloudflare)
   base_url: https://sveltia-cms-julio.davidg5854.workers.dev
 
@@ -17,7 +17,7 @@ public_folder: "/img"
 
 # Mensaje de los commits que genera el panel
 site_url: https://julioalfonzo.com
-display_url: https://julioalfonzo.com
+display_url: https://julio-staging.pages.dev
 
 collections:
   # ---------- Fechas / Shows ----------
