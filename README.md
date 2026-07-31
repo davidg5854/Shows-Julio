@@ -1,99 +1,192 @@
 # Julio Alfonzo · Sitio de Stand-Up
 
-Sitio web ligero para mostrar los shows de stand-up de Julio Alfonzo: próximas
-fechas, videos, bio y contacto. Hecho con **HTML, CSS y JavaScript puro**, sin
-frameworks ni base de datos. Carga rápido y es fácil de mantener.
+Sitio oficial del comediante Julio Alfonzo: próximas fechas, bio, newsletter y
+contacto. Es un sitio **estático** (HTML, CSS y JavaScript puro, sin frameworks
+ni base de datos), publicado gratis en **GitHub Pages** con dominio propio
+**[julioalfonzo.com](https://julioalfonzo.com)**. Carga rápido, es seguro y casi
+no necesita mantenimiento.
+
+El contenido se edita desde un **panel de administración** (no hace falta tocar
+código).
+
+---
+
+## ✏️ Editar el sitio (panel de administración)
+
+1. Entrá a **https://julioalfonzo.com/admin/**
+2. Iniciá sesión con **GitHub**.
+3. Vas a ver dos secciones:
+   - **Fechas / Shows** → agregar, editar o quitar shows.
+   - **Configuración del sitio** → IDs de analítica, redes sociales y correo.
+4. Hacé tus cambios y tocá **Publicar**. El sitio se actualiza solo en 1-2 min.
+
+Cada cambio queda guardado y versionado en GitHub: si algo sale mal, se puede
+revertir.
+
+---
 
 ## Estructura del proyecto
 
 ```
 .
-├── index.html          → Página principal (estructura del sitio)
-├── css/estilos.css     → Estilos (tema "cartel de comedia" oscuro)
-├── js/app.js           → Pinta las fechas leyendo datos/shows.json
-├── datos/shows.json    → ⭐ AQUÍ se editan las fechas de los shows
-└── img/                → Fotos (ver img/LEEME.txt)
+├── index.html            → Página principal
+├── privacidad.html       → Política de privacidad y cookies
+├── css/estilos.css       → Estilos (tema negro/rojo)
+├── js/app.js             → Pinta las fechas y aplica la configuración
+├── datos/
+│   ├── shows.json        → ⭐ Las fechas de los shows
+│   └── config.json       → ⭐ Analítica, redes y contacto
+├── admin/                → Panel de edición (Sveltia CMS)
+│   ├── index.html
+│   └── config.yml        → Configuración del panel
+├── fonts/bebas.woff2     → Tipografía de títulos (autoalojada)
+├── img/                  → Fotos (ver img/LEEME.txt)
+├── CNAME                 → Dominio (julioalfonzo.com)
+├── robots.txt / sitemap.xml / llms.txt → SEO y buscadores/IA
+└── .github/workflows/desplegar.yml     → Publicación automática
 ```
 
-## Cómo agregar o quitar una fecha de show
+---
 
-Todo se controla desde **`datos/shows.json`**. No hace falta tocar el código.
-Cada show es un bloque como este:
+## Las fechas: `datos/shows.json`
+
+El panel edita este archivo, pero también se puede editar a mano. Es un objeto
+con una lista `shows`:
 
 ```json
 {
-  "fecha": "2026-07-18",
-  "ciudad": "Caracas",
-  "lugar": "Trasnocho Cultural",
-  "tipo": "pago",
-  "estado": "disponible",
-  "entradas": "https://www.passline.com/mi-evento",
-  "boton": "Comprar entradas",
-  "nota": "20:00 h"
+  "shows": [
+    {
+      "fecha": "2026-08-06",
+      "ciudad": "Buenos Aires",
+      "lugar": "Factoría Social Club · Fragata Sarmiento",
+      "hora": "21:00",
+      "tipo": "pago",
+      "estado": "disponible",
+      "etiqueta": "Reservas gratis",
+      "entradas": "https://...",
+      "boton": "Entradas"
+    }
+  ]
 }
 ```
 
-### Qué significa cada campo
-
-| Campo      | Obligatorio | Valores / explicación |
-|------------|-------------|------------------------|
-| `fecha`    | Sí          | Formato `AAAA-MM-DD`. Las fechas pasadas se ocultan solas. |
-| `ciudad`   | Sí          | Ciudad del show. |
-| `lugar`    | Sí          | Teatro o local. |
-| `tipo`     | Sí          | `"pago"` o `"gratis"`. Cambia la etiqueta y el botón. |
+| Campo      | Obligatorio | Explicación |
+|------------|-------------|-------------|
+| `fecha`    | Sí          | `AAAA-MM-DD`. Se ordenan solas y las fechas pasadas se ocultan. |
+| `ciudad`   | Sí          | Título grande de la tarjeta (ej. Buenos Aires). |
+| `lugar`    | Sí          | Local o teatro. |
+| `hora`     | No          | Ej. `21:00`. Se muestra junto al lugar. |
+| `tipo`     | Sí          | `"pago"` o `"gratis"`. |
 | `estado`   | Sí          | `"disponible"`, `"agotado"` o `"proximamente"`. |
-| `entradas` | Sí          | **El enlace del botón.** Puede ser cualquier URL (ver abajo). |
-| `boton`    | No          | Texto personalizado del botón. Si se omite, usa uno por defecto. |
-| `nota`     | No          | Texto pequeño extra (hora, "cupo limitado", etc.). |
+| `etiqueta` | No          | Texto de la pastilla (ej. `Reservas gratis`). Vacío = "Entradas a la venta". |
+| `entradas` | Sí          | **El enlace del botón.** Sirve cualquier URL (ver abajo). |
+| `boton`    | No          | Texto del botón. Por defecto: "Entradas". |
 
 ### El campo `entradas` acepta cualquier enlace
 
-Esa es la clave de las reservas: el botón es **agnóstico**, sirve para todo.
+El botón es agnóstico, sirve para todo:
 
-- **Show pago** → enlace a la plataforma de venta (Passline, Eventbrite, etc.).
+- **Show pago** → enlace a la plataforma de venta (Passline, Eventbrite, Ticketplate…).
 - **Show gratis con cupo** → enlace a un formulario de reserva (Tally, Google Forms).
-- **WhatsApp** → enlace directo, por ejemplo:
-  `https://wa.me/000000000000?text=Quiero%20entradas%20para%20el%20show`
+- **WhatsApp** → enlace directo (`https://wa.link/...` o `https://wa.me/...`).
 
-Así se combinan **plataformas + formulario + WhatsApp** según lo necesite cada
-ciudad, sin cambiar nada del código.
+No se procesan pagos ni se guardan datos en el sitio: todo lo maneja la
+plataforma externa. Por eso el sitio es estático y sin mantenimiento.
 
-## Cómo gestionar las reservas (resumen)
+---
 
-1. **Pagos:** crea el evento en Passline o Eventbrite y pega su enlace en `entradas`.
-   La plataforma cobra, controla el cupo y entrega la entrada con QR.
-2. **Gratis:** crea un formulario en [Tally](https://tally.so) o Google Forms con
-   límite de cupo y pega su enlace en `entradas` (pon `"tipo": "gratis"`).
-3. **WhatsApp:** úsalo como respaldo en cualquier ciudad poniendo un enlace `wa.me`.
+## Configuración: `datos/config.json`
 
-No se procesan pagos ni se guardan datos en este sitio: todo lo maneja la
-plataforma externa. Por eso el sitio es estático, seguro y sin mantenimiento.
+Controla la analítica, las redes y el contacto (todo editable desde el panel).
+Si dejás un valor vacío, esa herramienta se desactiva o esa red se esconde.
+
+```json
+{
+  "analytics": {
+    "ga4": "G-XXXXXXXXXX",
+    "clarity": "xxxxxxxxxx",
+    "metaPixel": "0000000000000000"
+  },
+  "redes": {
+    "instagram": "https://...",
+    "youtube": "https://...",
+    "facebook": "https://...",
+    "threads": "https://...",
+    "substack": "https://..."
+  },
+  "contacto": { "email": "contacto@julioalfonzo.com" }
+}
+```
+
+---
+
+## Analítica, publicidad y cookies
+
+- **Google Analytics (GA4)** y **Microsoft Clarity**: se activan **solo si el
+  visitante acepta** el aviso de cookies (Consent Mode / carga diferida).
+- **Meta Pixel**: activo en cada visita, con fines publicitarios (retargeting).
+- Los **IDs** de las tres se editan desde el panel (`config.json`).
+- El aviso de cookies y la página **`privacidad.html`** explican qué se recolecta
+  y cómo limitarlo.
+
+---
+
+## Correo `@julioalfonzo.com`
+
+El correo se reenvía con **ImprovMX** (gratis). En el DNS del dominio (DonWeb)
+están los registros **MX**, **SPF** y **DMARC**.
+
+> ⚠️ No uses "Restaurar MX por defecto" en el panel de DNS: borraría el reenvío.
+
+---
+
+## Publicación (deploy)
+
+- El sitio se publica en **GitHub Pages** mediante GitHub Actions.
+- Cada vez que se sube un cambio a la rama de publicación (definida en
+  `.github/workflows/desplegar.yml`), el sitio se despliega **solo**.
+- El panel de administración comitea a esa misma rama, así los cambios que hacés
+  desde `/admin` se publican automáticamente.
+- El dominio se conecta con el archivo `CNAME` + los registros DNS (A hacia las
+  IP de GitHub Pages y CNAME de `www`).
+
+---
+
+## SEO
+
+Incluye `title`, `description`, `canonical`, Open Graph/Twitter, datos
+estructurados (Schema.org: Persona + eventos de comedia), `sitemap.xml`,
+`robots.txt` y `llms.txt` (para motores de IA).
+
+---
 
 ## Ver el sitio en tu computadora
 
-Como el sitio carga `shows.json`, hay que abrirlo con un pequeño servidor local
-(no con doble clic en el archivo). Desde la carpeta del proyecto:
+Como carga `shows.json` y `config.json`, hay que usar un servidor local (no abrir
+el archivo con doble clic). Desde la carpeta del proyecto:
 
 ```bash
-# Con Python (ya viene en Mac/Linux)
 python3 -m http.server 8000
 ```
 
-Luego abre `http://localhost:8000` en el navegador.
+Luego abrí `http://localhost:8000`.
 
-## Publicar el sitio (gratis)
+---
 
-El sitio es estático, así que se puede publicar gratis en:
+## El panel por dentro (técnico)
 
-- **Cloudflare Pages** (recomendado): conecta el repo de GitHub y publica solo.
-- **GitHub Pages**: activa Pages en la configuración del repositorio.
-- **Netlify**: arrastra la carpeta o conecta el repo.
+- Está hecho con **Sveltia CMS** (`admin/index.html` + `admin/config.yml`).
+- El login con GitHub usa un pequeño worker de **Cloudflare** (proyecto
+  `sveltia-cms-auth`); su URL está en `base_url`, dentro de `admin/config.yml`.
+- Para que el login funcione, el worker necesita las variables
+  `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` y `ALLOWED_DOMAINS` (de una GitHub
+  OAuth App).
 
-Cada vez que edites `shows.json` y subas el cambio, el sitio se actualiza solo.
+---
 
-## Personalizar
+## Personalizar el diseño
 
-- **Nombre, bio, redes y contacto:** edita los textos en `index.html`.
-- **Videos:** reemplaza `VIDEO_ID` en `index.html` por el ID del video de YouTube.
-- **Fotos:** ver instrucciones en `img/LEEME.txt`.
-- **Colores:** cambia las variables al inicio de `css/estilos.css`.
+- **Colores:** variables al inicio de `css/estilos.css`.
+- **Textos** (bio, hero, newsletter): por ahora se editan en `index.html`.
+- **Fotos:** carpeta `img/` (ver `img/LEEME.txt`).
