@@ -44,3 +44,34 @@ collections:
               - { name: etiqueta, label: "Etiqueta (opcional)", widget: string, required: false, hint: "Ejemplo: Reservas gratis. Si lo dejás vacío, muestra 'Entradas a la venta'." }
               - { name: entradas, label: "Link de entradas", widget: string, hint: "El enlace donde se compran/reservan las entradas." }
               - { name: boton, label: "Texto del botón", widget: string, default: "Entradas", required: false }
+
+  # ---------- Configuración del sitio ----------
+  - name: config
+    label: "Configuración del sitio"
+    files:
+      - name: general
+        label: "Analytics, redes y contacto"
+        file: "datos/config.json"
+        description: "IDs de analítica/publicidad, enlaces de redes y correo de contacto. Dejá un campo vacío para desactivar esa herramienta o esconder esa red."
+        fields:
+          - name: analytics
+            label: "Analytics y publicidad"
+            widget: object
+            fields:
+              - { name: ga4, label: "ID de Google Analytics (GA4)", widget: string, required: false, hint: "Ejemplo: G-XXXXXXXXXX. Vacío = desactivado." }
+              - { name: clarity, label: "ID de Microsoft Clarity", widget: string, required: false, hint: "Vacío = desactivado." }
+              - { name: metaPixel, label: "ID del Pixel de Meta", widget: string, required: false, hint: "Vacío = desactivado." }
+          - name: redes
+            label: "Redes sociales (URLs)"
+            widget: object
+            fields:
+              - { name: instagram, label: "Instagram", widget: string, required: false }
+              - { name: youtube, label: "YouTube", widget: string, required: false }
+              - { name: facebook, label: "Facebook", widget: string, required: false }
+              - { name: threads, label: "Threads", widget: string, required: false }
+              - { name: substack, label: "Newsletter (Substack)", widget: string, required: false }
+          - name: contacto
+            label: "Contacto"
+            widget: object
+            fields:
+              - { name: email, label: "Email de contacto", widget: string }

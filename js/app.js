@@ -179,52 +179,101 @@ function cerrarMenu() {
   window.addEventListener("resize", ajustar);
 })();
 
-/* ---------- Analytics con Consent Mode (GA4) + Clarity ---------- */
-// GA4 se carga siempre, pero con el consentimiento DENEGADO por defecto:
-// no usa cookies ni rastrea al usuario hasta que acepta el aviso.
-(function () {
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function () { window.dataLayer.push(arguments); };
-  gtag("consent", "default", {
-    ad_storage: "denied",
-    ad_user_data: "denied",
-    ad_personalization: "denied",
-    analytics_storage: "denied",
-    wait_for_update: 500,
-  });
-  const ga = document.createElement("script");
-  ga.async = true;
-  ga.src = "https://www.googletagmanager.com/gtag/js?id=G-5J1C29QDH1";
-  document.head.appendChild(ga);
-  gtag("js", new Date());
-  gtag("config", "G-5J1C29QDH1");
-})();
+/* ---------- Configuración editable del sitio (analytics, redes, contacto) ---------- */
+// Valores por defecto: se usan si no se puede cargar datos/config.json.
+const CONFIG_DEFECTO = {
+  analytics: { ga4: "G-5J1C29QDH1", clarity: "xrmdltqqya", metaPixel: "2116210522579728" },
+  redes: {
+    instagram: "https://www.instagram.com/esjulioalfonzo",
+    youtube: "https://www.youtube.com/@julitoalfonzo",
+    facebook: "https://www.facebook.com/share/18hyE2Q61d/",
+    threads: "https://www.threads.net/@esjulioalfonzo",
+    substack: "https://esjulioalfonzo.substack.com",
+  },
+  contacto: { email: "contacto@julioalfonzo.com" },
+};
 
-// Microsoft Clarity: solo se carga tras aceptar (usa cookies de sesión).
+let clarityId = null;
+
+async function cargarConfig() {
+  let cfg = CONFIG_DEFECTO;
+  try {
+    const r = await fetch("datos/config.json", { cache: "no-cache" });
+    if (r.ok) {
+      const c = await r.json();
+      cfg = {
+        analytics: Object.assign({}, CONFIG_DEFECTO.analytics, c.analytics || {}),
+        redes: Object.assign({}, CONFIG_DEFECTO.redes, c.redes || {}),
+        contacto: Object.assign({}, CONFIG_DEFECTO.contacto, c.contacto || {}),
+      };
+    }
+  } catch (e) { /* se usan los valores por defecto */ }
+  aplicarRedes(cfg);
+  iniciarAnalytics(cfg.analytics);
+  iniciarCookies();
+}
+
+// Aplica los enlaces de redes y el correo según la configuración
+function aplicarRedes(cfg) {
+  document.querySelectorAll("[data-red]").forEach(function (a) {
+    const url = cfg.redes[a.dataset.red];
+    if (url) { a.setAttribute("href", url); a.style.display = ""; }
+    else { a.style.display = "none"; }
+  });
+  document.querySelectorAll('[data-contacto="email"]').forEach(function (a) {
+    if (!cfg.contacto.email) return;
+    a.setAttribute("href", "mailto:" + cfg.contacto.email);
+    if (a.classList.contains("pie__mail")) a.textContent = cfg.contacto.email;
+  });
+}
+
+/* ---------- Analytics (IDs configurables desde el panel) ---------- */
+function iniciarAnalytics(a) {
+  // Google Analytics (GA4) con Consent Mode: denegado por defecto.
+  if (a && a.ga4) {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    gtag("consent", "default", {
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      analytics_storage: "denied",
+      wait_for_update: 500,
+    });
+    const ga = document.createElement("script");
+    ga.async = true;
+    ga.src = "https://www.googletagmanager.com/gtag/js?id=" + a.ga4;
+    document.head.appendChild(ga);
+    gtag("js", new Date());
+    gtag("config", a.ga4);
+  }
+  // Meta Pixel (Facebook): activo en cada visita (medición y publicidad).
+  if (a && a.metaPixel) {
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0";
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+    }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+    window.fbq("init", a.metaPixel);
+    window.fbq("track", "PageView");
+  }
+  // Clarity se guarda para cargarlo al aceptar (usa cookies de sesión).
+  clarityId = (a && a.clarity) || null;
+}
+
 let clarityCargado = false;
 function cargarClarity() {
-  if (clarityCargado) return;
+  if (!clarityId || clarityCargado) return;
   clarityCargado = true;
   (function (c, l, a, r, i, t, y) {
     c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
     t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
     y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-  })(window, document, "clarity", "script", "xrmdltqqya");
+  })(window, document, "clarity", "script", clarityId);
 }
-
-// Meta Pixel (Facebook): activo en cada visita, para medición y publicidad (ads).
-(function () {
-  !function (f, b, e, v, n, t, s) {
-    if (f.fbq) return; n = f.fbq = function () {
-      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-    };
-    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0";
-    n.queue = []; t = b.createElement(e); t.async = !0;
-    t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
-  }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-  window.fbq("init", "2116210522579728");
-  window.fbq("track", "PageView");
-})();
 
 // Al aceptar: otorga el consentimiento a Google Analytics y activa Clarity.
 function otorgarConsentimiento() {
@@ -240,7 +289,7 @@ function otorgarConsentimiento() {
 }
 
 /* ---------- Aviso de cookies ---------- */
-(function () {
+function iniciarCookies() {
   const banner = document.getElementById("cookies");
   let consentimiento = null;
   try { consentimiento = localStorage.getItem("cookies-consent"); } catch (e) {}
@@ -262,6 +311,7 @@ function otorgarConsentimiento() {
     banner.classList.remove("visible");
     if (decision === "aceptar") otorgarConsentimiento();
   });
-})();
+}
 
+cargarConfig();
 cargarShows();
