@@ -1,33 +1,35 @@
-[
-  {
-    "fecha": "2026-08-06",
-    "ciudad": "Buenos Aires",
-    "lugar": "Factoría Social Club · Fragata Sarmiento",
-    "hora": "21:00",
-    "tipo": "pago",
-    "estado": "disponible",
-    "etiqueta": "Reservas gratis",
-    "entradas": "https://compras.evento-simple.com/factoria/eventos/julio-y-sus-amigos-show-de-stand-up-e44",
-    "boton": "Entradas"
-  },
-  {
-    "fecha": "2026-08-13",
-    "ciudad": "Valencia",
-    "lugar": "La Previa · C.C. Guadalupe",
-    "hora": "21:00",
-    "tipo": "pago",
-    "estado": "disponible",
-    "entradas": "https://wa.link/nd9y4f",
-    "boton": "Entradas"
-  },
-  {
-    "fecha": "2026-08-15",
-    "ciudad": "Barquisimeto",
-    "lugar": "Andrea Chill & Bar",
-    "hora": "21:00",
-    "tipo": "pago",
-    "estado": "disponible",
-    "entradas": "https://ticketplate.com/checkout/julio-y-sus-amigos-202608152100",
-    "boton": "Entradas"
-  }
-]
+{
+  "shows": [
+    {
+      "fecha": "2026-08-06",
+      "ciudad": "Buenos Aires",
+      "lugar": "Factoría Social Club · Fragata Sarmiento",
+      "hora": "21:00",
+      "tipo": "pago",
+      "estado": "disponible",
+      "etiqueta": "Reservas gratis",
+      "entradas": "https://compras.evento-simple.com/factoria/eventos/julio-y-sus-amigos-show-de-stand-up-e44",
+      "boton": "Entradas"
+    },
+    {
+      "fecha": "2026-08-13",
+      "ciudad": "Valencia",
+      "lugar": "La Previa · C.C. Guadalupe",
+      "hora": "21:00",
+      "tipo": "pago",
+      "estado": "disponible",
+      "entradas": "https://wa.link/nd9y4f",
+      "boton": "Entradas"
+    },
+    {
+      "fecha": "2026-08-15",
+      "ciudad": "Barquisimeto",
+      "lugar": "Andrea Chill & Bar",
+      "hora": "21:00",
+      "tipo": "pago",
+      "estado": "disponible",
+      "entradas": "https://ticketplate.com/checkout/julio-y-sus-amigos-202608152100",
+      "boton": "Entradas"
+    }
+  ]
+}

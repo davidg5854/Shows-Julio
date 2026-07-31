@@ -1,0 +1,47 @@
+# ===================================================================
+# Configuración del panel de edición (Sveltia CMS)
+# ===================================================================
+backend:
+  name: github
+  repo: davidg5854/Shows-Julio
+  branch: claude/sitio-shows-stand-up-s60meu
+  # URL del servicio de autenticación (worker de Cloudflare).
+  # REEMPLAZAR por la URL real del worker una vez desplegado:
+  base_url: https://REEMPLAZAR-POR-TU-WORKER.workers.dev
+
+# Idioma del panel
+locale: es
+
+# Carpeta donde se guardan las imágenes que subas desde el panel
+media_folder: "img"
+public_folder: "/img"
+
+# Mensaje de los commits que genera el panel
+site_url: https://julioalfonzo.com
+display_url: https://julioalfonzo.com
+
+collections:
+  # ---------- Fechas / Shows ----------
+  - name: fechas
+    label: "Fechas / Shows"
+    files:
+      - name: shows
+        label: "Próximas fechas"
+        file: "datos/shows.json"
+        description: "Agregá, editá o quitá los shows. Se ordenan por fecha automáticamente en la web y las fechas pasadas dejan de mostrarse solas."
+        fields:
+          - name: shows
+            label: "Shows"
+            label_singular: "Show"
+            widget: list
+            summary: "{{fields.fecha}} · {{fields.ciudad}}"
+            fields:
+              - { name: fecha, label: "Fecha", widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: false, format: "YYYY-MM-DD" }
+              - { name: ciudad, label: "Ciudad (título grande)", widget: string, hint: "Ejemplo: Buenos Aires" }
+              - { name: lugar, label: "Lugar", widget: string, hint: "Ejemplo: Factoría Social Club · Fragata Sarmiento" }
+              - { name: hora, label: "Hora", widget: string, default: "21:00", required: false }
+              - { name: tipo, label: "Tipo de entrada", widget: select, options: ["pago", "gratis"], default: "pago" }
+              - { name: estado, label: "Estado", widget: select, options: ["disponible", "agotado", "proximamente"], default: "disponible" }
+              - { name: etiqueta, label: "Etiqueta (opcional)", widget: string, required: false, hint: "Ejemplo: Reservas gratis. Si lo dejás vacío, muestra 'Entradas a la venta'." }
+              - { name: entradas, label: "Link de entradas", widget: string, hint: "El enlace donde se compran/reservan las entradas." }
+              - { name: boton, label: "Texto del botón", widget: string, default: "Entradas", required: false }

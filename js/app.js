@@ -63,7 +63,8 @@ async function cargarShows() {
   try {
     const respuesta = await fetch("datos/shows.json", { cache: "no-cache" });
     if (!respuesta.ok) throw new Error("No se pudo cargar shows.json");
-    const shows = await respuesta.json();
+    const datos = await respuesta.json();
+    const shows = Array.isArray(datos) ? datos : (datos && Array.isArray(datos.shows) ? datos.shows : []);
 
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
