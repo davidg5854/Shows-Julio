@@ -211,11 +211,10 @@ function cargarClarity() {
   })(window, document, "clarity", "script", "xrmdltqqya");
 }
 
-// Meta Pixel (Facebook): solo se carga tras aceptar (usa cookies de terceros).
-let pixelMetaCargado = false;
-function cargarPixelMeta() {
-  if (pixelMetaCargado) return;
-  pixelMetaCargado = true;
+// Meta Pixel (Facebook): se carga SIEMPRE, pero con el consentimiento REVOCADO
+// por defecto. Así las herramientas de Meta (Pixel Helper / Events Manager) lo
+// detectan al instante, pero no se envían eventos hasta que el visitante acepta.
+(function () {
   !function (f, b, e, v, n, t, s) {
     if (f.fbq) return; n = f.fbq = function () {
       n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
@@ -224,11 +223,12 @@ function cargarPixelMeta() {
     n.queue = []; t = b.createElement(e); t.async = !0;
     t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
   }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+  window.fbq("consent", "revoke");
   window.fbq("init", "2116210522579728");
   window.fbq("track", "PageView");
-}
+})();
 
-// Al aceptar: actualiza el consentimiento de GA (granted) y activa Clarity + Meta.
+// Al aceptar: otorga el consentimiento a GA y Meta, y activa Clarity.
 function otorgarConsentimiento() {
   if (typeof window.gtag === "function") {
     window.gtag("consent", "update", {
@@ -238,8 +238,10 @@ function otorgarConsentimiento() {
       analytics_storage: "granted",
     });
   }
+  if (typeof window.fbq === "function") {
+    window.fbq("consent", "grant");
+  }
   cargarClarity();
-  cargarPixelMeta();
 }
 
 /* ---------- Aviso de cookies ---------- */
