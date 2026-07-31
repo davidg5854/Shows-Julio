@@ -1,10 +1,10 @@
 {
-  "hero": {
-    "eyebrow": "Julio y Sus Amigos · Stand-Up"
-  },
   "imagenes": {
     "hero": "img/hero.jpg",
     "bio": "img/bio.jpg"
+  },
+  "hero": {
+    "eyebrow": "Julio y Sus Amigos · Stand-Up"
   },
   "bio": {
     "cita": "Baila bien, cocina rico y es buen muchacho",
