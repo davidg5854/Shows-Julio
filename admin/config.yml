@@ -75,3 +75,38 @@ collections:
             widget: object
             fields:
               - { name: email, label: "Email de contacto", widget: string }
+
+  # ---------- Textos y fotos ----------
+  - name: contenido
+    label: "Textos y fotos"
+    files:
+      - name: general
+        label: "Textos e imágenes del sitio"
+        file: "datos/contenido.json"
+        description: "Editá los textos y las fotos del sitio. En los textos podés usar *cursiva* y **negrita**."
+        fields:
+          - name: imagenes
+            label: "Fotos"
+            widget: object
+            fields:
+              - { name: hero, label: "Foto de portada (fondo del hero)", widget: image, hint: "Ideal horizontal y en buena calidad." }
+              - { name: bio, label: "Foto de la bio", widget: image, hint: "Ideal vertical (retrato)." }
+          - name: hero
+            label: "Portada (hero)"
+            widget: object
+            fields:
+              - { name: eyebrow, label: "Texto pequeño de arriba", widget: string }
+          - name: bio
+            label: "Bio (Sobre Julio)"
+            widget: object
+            fields:
+              - { name: cita, label: "Frase / cita", widget: string }
+              - { name: resaltado, label: "Palabras en rojo dentro de la frase", widget: string, required: false, hint: "Deben aparecer tal cual en la frase de arriba." }
+              - { name: autor, label: "Autor de la frase", widget: string }
+              - { name: texto, label: "Texto de la bio", widget: text, hint: "Separá los párrafos con una línea en blanco. Usá *cursiva* y **negrita**." }
+          - name: newsletter
+            label: "Newsletter"
+            widget: object
+            fields:
+              - { name: titulo, label: "Título", widget: string, hint: "Para una palabra en rojo, ponela entre asteriscos. Ej: ¿Quieres *más*?" }
+              - { name: texto, label: "Texto", widget: text }

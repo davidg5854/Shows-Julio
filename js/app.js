@@ -313,5 +313,80 @@ function iniciarCookies() {
   });
 }
 
+/* ---------- Contenido editable (textos y fotos) ---------- */
+// Formato mínimo: **negrita**, *cursiva* y saltos de línea.
+function formatoInline(t) {
+  let h = escapar(t);
+  h = h.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  h = h.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  return h.replace(/\n/g, "<br>");
+}
+// Varios párrafos separados por una línea en blanco.
+function formatoParrafos(t) {
+  return String(t || "")
+    .split(/\n{2,}/)
+    .map(function (b) { return "<p>" + formatoInline(b.trim()) + "</p>"; })
+    .join("");
+}
+
+async function cargarContenido() {
+  let c;
+  try {
+    const r = await fetch("datos/contenido.json", { cache: "no-cache" });
+    if (!r.ok) return;
+    c = await r.json();
+  } catch (e) { return; }
+  if (!c) return;
+  aplicarContenido(c);
+}
+
+function aplicarContenido(c) {
+  // Portada (hero)
+  if (c.hero && c.hero.eyebrow) {
+    const eb = document.querySelector(".cartel__eyebrow");
+    if (eb) eb.textContent = c.hero.eyebrow;
+  }
+  // Fotos
+  if (c.imagenes) {
+    if (c.imagenes.hero) {
+      const bg = document.querySelector(".cartel__bg");
+      if (bg) bg.style.backgroundImage = "url('" + c.imagenes.hero + "')";
+    }
+    if (c.imagenes.bio) {
+      const img = document.querySelector(".sobre__foto img");
+      if (img) img.setAttribute("src", c.imagenes.bio);
+    }
+  }
+  // Bio
+  if (c.bio) {
+    const cita = document.querySelector(".sobre__cita");
+    if (cita && c.bio.cita) {
+      let texto = escapar(c.bio.cita);
+      if (c.bio.resaltado) {
+        const r = escapar(c.bio.resaltado);
+        texto = texto.replace(r, "<b>" + r + "</b>");
+      }
+      const autor = c.bio.autor ? "<cite>— " + escapar(c.bio.autor) + "</cite>" : "";
+      cita.innerHTML = "“" + texto + "”" + autor;
+    }
+    if (c.bio.texto) {
+      const t = document.querySelector(".sobre__texto");
+      if (t) t.innerHTML = formatoParrafos(c.bio.texto);
+    }
+  }
+  // Newsletter
+  if (c.newsletter) {
+    if (c.newsletter.titulo) {
+      const tit = document.querySelector(".news .titulo");
+      if (tit) tit.innerHTML = formatoInline(c.newsletter.titulo);
+    }
+    if (c.newsletter.texto) {
+      const p = document.querySelector(".news__in p");
+      if (p) p.innerHTML = formatoInline(c.newsletter.texto);
+    }
+  }
+}
+
 cargarConfig();
+cargarContenido();
 cargarShows();

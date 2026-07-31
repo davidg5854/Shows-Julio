@@ -1,0 +1,19 @@
+{
+  "hero": {
+    "eyebrow": "Julio y Sus Amigos · Stand-Up"
+  },
+  "imagenes": {
+    "hero": "img/hero.jpg",
+    "bio": "img/bio.jpg"
+  },
+  "bio": {
+    "cita": "Baila bien, cocina rico y es buen muchacho",
+    "resaltado": "buen muchacho",
+    "autor": "Mi mamá",
+    "texto": "¡Hola! Soy Julio Alfonzo, comediante venezolano residenciado en Buenos Aires. Escribí shows de internet como *Entregrados* y soy parte creativa y de producción de *El Hueco*, el podcast de comedia de Manuel Ángel Redondo y Gabo Ruiz.\n\nTambién escribí 2 episodios de *La Cueva*, una serie web de 7 episodios que se estrena este año, con varios de mis comediantes favoritos de Venezuela y Argentina.\n\nActualmente tengo mi propio show, **Julio y Sus Amigos**, cada dos semanas en Factoría, Buenos Aires."
+  },
+  "newsletter": {
+    "titulo": "¿Quieres *más*?",
+    "texto": "Julio escribe en su newsletter y tiene un canal de YouTube. Suscríbete y no te pierdas nada entre show y show."
+  }
+}

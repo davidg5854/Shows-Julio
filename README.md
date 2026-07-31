@@ -15,9 +15,10 @@ código).
 
 1. Entrá a **https://julioalfonzo.com/admin/**
 2. Iniciá sesión con **GitHub**.
-3. Vas a ver dos secciones:
+3. Vas a ver tres secciones:
    - **Fechas / Shows** → agregar, editar o quitar shows.
    - **Configuración del sitio** → IDs de analítica, redes sociales y correo.
+   - **Textos y fotos** → textos de la portada, la bio y el newsletter, y las fotos.
 4. Hacé tus cambios y tocá **Publicar**. El sitio se actualiza solo en 1-2 min.
 
 Cada cambio queda guardado y versionado en GitHub: si algo sale mal, se puede
@@ -35,7 +36,8 @@ revertir.
 ├── js/app.js             → Pinta las fechas y aplica la configuración
 ├── datos/
 │   ├── shows.json        → ⭐ Las fechas de los shows
-│   └── config.json       → ⭐ Analítica, redes y contacto
+│   ├── config.json       → ⭐ Analítica, redes y contacto
+│   └── contenido.json    → ⭐ Textos y fotos del sitio
 ├── admin/                → Panel de edición (Sveltia CMS)
 │   ├── index.html
 │   └── config.yml        → Configuración del panel
@@ -121,6 +123,18 @@ Si dejás un valor vacío, esa herramienta se desactiva o esa red se esconde.
 
 ---
 
+## Textos y fotos: `datos/contenido.json`
+
+Los textos de la portada (eyebrow), la bio (cita, autor y párrafos) y el
+newsletter, junto con las fotos de portada y de la bio, se editan desde el panel
+o en este archivo. En los textos se puede usar `*cursiva*` y `**negrita**`, y
+separar párrafos con una línea en blanco.
+
+> Los textos también están en `index.html` como respaldo (bueno para SEO); el
+> sitio los sobrescribe con lo de `contenido.json` al cargar.
+
+---
+
 ## Analítica, publicidad y cookies
 
 - **Google Analytics (GA4)** y **Microsoft Clarity**: se activan **solo si el
@@ -188,5 +202,5 @@ Luego abrí `http://localhost:8000`.
 ## Personalizar el diseño
 
 - **Colores:** variables al inicio de `css/estilos.css`.
-- **Textos** (bio, hero, newsletter): por ahora se editan en `index.html`.
-- **Fotos:** carpeta `img/` (ver `img/LEEME.txt`).
+- **Textos y fotos:** desde el panel (sección *Textos y fotos*) o en `datos/contenido.json`.
+- **Imagen para compartir (og):** es `img/og.jpg` (ver `img/LEEME.txt`).
