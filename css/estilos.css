@@ -138,6 +138,8 @@
   .pie > div:last-child { text-align: right; }
   .pie > div:last-child .pie__redes { justify-content: flex-end; }
   .pie__copy { border-top: 2px solid var(--borde); margin-top: 1rem; padding: 1.2rem clamp(1rem,4vw,2.5rem); text-align: center; color: var(--humo); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .pie__copy a { color: var(--humo); text-decoration: underline; }
+  .pie__copy a:hover { color: var(--rojo); }
   @media (max-width: 640px) { .pie { grid-template-columns: 1fr; }
     .pie > div:last-child { text-align: left; } .pie > div:last-child .pie__redes { justify-content: flex-start; } }
 
