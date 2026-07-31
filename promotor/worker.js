@@ -33,6 +33,10 @@ export default {
       return json({ ok: false, error: "Clave incorrecta." }, 401);
     }
 
+    if (!env.GITHUB_TOKEN) {
+      return json({ ok: false, error: "Falta configurar GITHUB_TOKEN en el worker." }, 500);
+    }
+
     const r = await fetch("https://api.github.com/repos/" + REPO + "/merges", {
       method: "POST",
       headers: {
@@ -46,6 +50,15 @@ export default {
 
     if (r.status === 201) return json({ ok: true, estado: "promovido" });
     if (r.status === 204) return json({ ok: true, estado: "sin-cambios" });
+    if (r.status === 401) {
+      return json({ ok: false, error: "El token de GitHub no es válido o expiró. Generá uno nuevo y actualizá GITHUB_TOKEN." }, 401);
+    }
+    if (r.status === 403) {
+      return json({ ok: false, error: "Al token le falta el permiso 'Contents: Read and write' sobre el repositorio." }, 403);
+    }
+    if (r.status === 404) {
+      return json({ ok: false, error: "El token no tiene acceso a este repositorio (revisá que esté seleccionado)." }, 404);
+    }
     if (r.status === 409) return json({ ok: false, error: "Hay un conflicto que resolver a mano." }, 409);
     const detalle = (await r.text()).slice(0, 200);
     return json({ ok: false, error: "GitHub respondió " + r.status, detalle }, 502);

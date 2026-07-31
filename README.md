@@ -19,10 +19,39 @@ código).
    - **Fechas / Shows** → agregar, editar o quitar shows.
    - **Configuración del sitio** → IDs de analítica, redes sociales y correo.
    - **Textos y fotos** → textos de la portada, la bio y el newsletter, y las fotos.
-4. Hacé tus cambios y tocá **Publicar**. El sitio se actualiza solo en 1-2 min.
+4. Hacé tus cambios y tocá **Publicar**.
+
+Los cambios **no salen en vivo todavía**: van al sitio de prueba. Para publicarlos
+en la web real, mirá el paso siguiente.
 
 Cada cambio queda guardado y versionado en GitHub: si algo sale mal, se puede
 revertir.
+
+---
+
+## 🚀 Probar y publicar (staging → producción)
+
+En la barra del panel (abajo a la derecha; en el celular es el botón redondo 🚀)
+hay tres accesos:
+
+| Botón | Qué hace |
+|-------|----------|
+| 🧪 **Sitio de prueba** | Abre `julio-staging.pages.dev`, donde se ven los cambios **antes** de publicarlos. |
+| 🌐 **Sitio real** | Abre `julioalfonzo.com`, lo que ve el público. |
+| 🚀 **Promover** | Publica en la web real lo que ya probaste. |
+
+**El flujo:**
+
+1. Editás en el panel y guardás → el cambio va al **sitio de prueba**.
+2. Lo revisás en 🧪 **Sitio de prueba** (tarda ~1 min en aparecer).
+3. Si te gusta → 🚀 **Promover** → pide una clave (solo la primera vez, después
+   queda guardada en ese navegador) → confirmás.
+4. En 1-2 minutos queda publicado en **julioalfonzo.com**. ✅
+
+Si tocás *Promover* y no hay nada nuevo, avisa que la web real ya está al día.
+
+> **Ramas:** `staging` es el sitio de prueba y `main` es producción. *Promover*
+> hace el merge de `staging` a `main`, y ese merge dispara la publicación.
 
 ---
 
@@ -39,8 +68,10 @@ revertir.
 │   ├── config.json       → ⭐ Analítica, redes y contacto
 │   └── contenido.json    → ⭐ Textos y fotos del sitio
 ├── admin/                → Panel de edición (Sveltia CMS)
-│   ├── index.html
-│   └── config.yml        → Configuración del panel
+│   ├── index.html        → Panel + barra con los botones de prueba/real/promover
+│   ├── config.yml        → Configuración del panel
+│   └── promover.html     → Promoción manual (respaldo, por si falla el botón)
+├── promotor/worker.js    → Servicio que publica de staging a producción
 ├── fonts/bebas.woff2     → Tipografía de títulos (autoalojada)
 ├── img/                  → Fotos (ver img/LEEME.txt)
 ├── CNAME                 → Dominio (julioalfonzo.com)
@@ -157,11 +188,14 @@ están los registros **MX**, **SPF** y **DMARC**.
 
 ## Publicación (deploy)
 
-- El sitio se publica en **GitHub Pages** mediante GitHub Actions.
-- Cada vez que se sube un cambio a la rama de publicación (definida en
-  `.github/workflows/desplegar.yml`), el sitio se despliega **solo**.
-- El panel de administración comitea a esa misma rama, así los cambios que hacés
-  desde `/admin` se publican automáticamente.
+| Entorno | Rama | Dónde se publica | Para qué |
+|---------|------|------------------|----------|
+| 🌐 **Producción** | `main` | julioalfonzo.com (GitHub Pages) | La web real |
+| 🧪 **Prueba** | `staging` | julio-staging.pages.dev (Cloudflare Pages) | Revisar antes de publicar |
+
+- El panel de administración escribe siempre en **`staging`**.
+- **Promover** hace el merge de `staging` a `main`; ese push dispara el workflow
+  `.github/workflows/desplegar.yml`, que publica en GitHub Pages.
 - El dominio se conecta con el archivo `CNAME` + los registros DNS (A hacia las
   IP de GitHub Pages y CNAME de `www`).
 
