@@ -1,9 +1,0 @@
-{
-  // Configuración para servir el sitio estático como preview en Cloudflare.
-  // Solo se usa en la rama de pruebas (staging); la web real va por GitHub Pages.
-  "name": "julio-staging",
-  "compatibility_date": "2024-11-01",
-  "assets": {
-    "directory": "./"
-  }
-}
