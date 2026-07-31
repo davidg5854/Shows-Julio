@@ -5,9 +5,8 @@ backend:
   name: github
   repo: davidg5854/Shows-Julio
   branch: claude/sitio-shows-stand-up-s60meu
-  # URL del servicio de autenticación (worker de Cloudflare).
-  # REEMPLAZAR por la URL real del worker una vez desplegado:
-  base_url: https://REEMPLAZAR-POR-TU-WORKER.workers.dev
+  # URL del servicio de autenticación (worker de Cloudflare)
+  base_url: https://sveltia-cms-julio.davidg5854.workers.dev
 
 # Idioma del panel
 locale: es
