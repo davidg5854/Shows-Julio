@@ -2,7 +2,7 @@
   "shows": [
     {
       "fecha": "2026-08-06",
-      "ciudad": "Buenos Aires - Argentina",
+      "ciudad": "Buenos Aires Argentina",
       "lugar": "Factoría Social Club · Fragata Sarmiento",
       "hora": "21:00",
       "tipo": "pago",
@@ -13,17 +13,18 @@
     },
     {
       "fecha": "2026-08-13",
-      "ciudad": "Valencia",
+      "ciudad": "Valencia Venezuela",
       "lugar": "La Previa · C.C. Guadalupe",
       "hora": "21:00",
       "tipo": "pago",
       "estado": "disponible",
+      "etiqueta": "",
       "entradas": "https://wa.link/nd9y4f",
       "boton": "Entradas"
     },
     {
       "fecha": "2026-08-15",
-      "ciudad": "Barquisimeto",
+      "ciudad": "Barquisimeto Venezuela",
       "lugar": "Andrea Chill & Bar",
       "hora": "21:00",
       "tipo": "pago",
