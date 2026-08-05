@@ -97,7 +97,10 @@
   .ticket__fecha { text-align: center; border-right: 2px dashed var(--borde); padding-right: 1rem; }
   .ticket__dia { font-family: var(--display); font-size: 3.4rem; line-height: 0.85; color: var(--rojo); }
   .ticket__mes { text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.7rem; color: var(--humo); }
-  .ticket__ciudad { font-size: 1.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.01em; }
+  .ticket__ciudad { font-size: 1.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.01em; line-height: 1.15; }
+  /* El país acompaña a la ciudad: más chico y discreto, nunca se parte */
+  .ticket__pais { display: inline-block; font-size: 0.52em; font-weight: 700; letter-spacing: 0.14em;
+    color: var(--humo); white-space: nowrap; vertical-align: 0.28em; }
   .ticket__lugar { color: var(--humo); font-size: 0.9rem; }
   .ticket__estado { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 800; padding: 0.26rem 0.7rem; margin-top: 0.4rem; display: inline-block;
     background: rgba(229,55,43,0.14); color: #ff6a5d; }
@@ -105,6 +108,9 @@
     .ticket { grid-template-columns: 84px 1fr; grid-template-areas: "fecha info" "acc acc"; row-gap: 1rem; }
     .ticket__fecha { grid-area: fecha; } .ticket__acc { grid-area: acc; }
     .ticket__acc .btn { width: 100%; text-align: center; } .ticket__dia { font-size: 2.6rem; }
+    .ticket__ciudad { font-size: 1.35rem; }
+    /* En pantallas chicas el país va en su propia línea, más pequeño */
+    .ticket__pais { display: block; font-size: 0.62rem; vertical-align: 0; margin-top: 0.15rem; }
   }
 
   .sobre { border-top: 3px solid var(--hueso); border-bottom: 3px solid var(--hueso); }

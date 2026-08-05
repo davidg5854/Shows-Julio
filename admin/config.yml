@@ -36,7 +36,8 @@ collections:
             summary: "{{fields.fecha}} · {{fields.ciudad}}"
             fields:
               - { name: fecha, label: "Fecha", widget: datetime, date_format: "YYYY-MM-DD", time_format: false, picker_utc: false, format: "YYYY-MM-DD" }
-              - { name: ciudad, label: "Ciudad (título grande)", widget: string, hint: "Ejemplo: Buenos Aires" }
+              - { name: ciudad, label: "Ciudad (título grande)", widget: string, hint: "Solo la ciudad. Ejemplo: Buenos Aires" }
+              - { name: pais, label: "País", widget: string, required: false, hint: "Se muestra al lado de la ciudad, más chico. Ejemplo: Argentina" }
               - { name: lugar, label: "Lugar", widget: string, hint: "Ejemplo: Factoría Social Club · Fragata Sarmiento" }
               - { name: hora, label: "Hora", widget: string, default: "21:00", required: false }
               - { name: tipo, label: "Tipo de entrada", widget: select, options: ["pago", "gratis"], default: "pago" }

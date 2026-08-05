@@ -49,7 +49,7 @@ function pintarShow(show) {
     <article class="ticket">
       <div class="ticket__fecha"><div class="ticket__dia">${dia}</div><div class="ticket__mes">${mes}</div></div>
       <div class="ticket__info">
-        <div class="ticket__ciudad">${escapar(show.ciudad)}</div>
+        <div class="ticket__ciudad">${escapar(show.ciudad)}${show.pais ? ` <span class="ticket__pais">${escapar(show.pais)}</span>` : ""}</div>
         <div class="ticket__lugar">${lugar}</div>
         <span class="ticket__estado">${escapar(estado)}</span>
       </div>
@@ -111,7 +111,10 @@ function inyectarEventosSEO(shows) {
       "location": {
         "@type": "Place",
         "name": s.lugar,
-        "address": { "@type": "PostalAddress", "addressLocality": s.ciudad },
+        "address": Object.assign(
+          { "@type": "PostalAddress", "addressLocality": s.ciudad },
+          s.pais ? { addressCountry: s.pais } : {}
+        ),
       },
       "performer": { "@type": "Person", "name": "Julio Alfonzo" },
       "organizer": { "@type": "Person", "name": "Julio Alfonzo" },
