@@ -105,6 +105,13 @@ collections:
               - { name: resaltado, label: "Palabras en rojo dentro de la frase", widget: string, required: false, hint: "Deben aparecer tal cual en la frase de arriba." }
               - { name: autor, label: "Autor de la frase", widget: string }
               - { name: texto, label: "Texto de la bio", widget: text, hint: "Separá los párrafos con una línea en blanco. Usá *cursiva* y **negrita**." }
+          - name: video
+            label: "Video"
+            widget: object
+            fields:
+              - { name: youtube, label: "Enlace del video de YouTube", widget: string, required: false, hint: "Pegá el enlace del video (o su código). Si lo dejás vacío, la sección de video no se muestra." }
+              - { name: titulo, label: "Título de la sección", widget: string, default: "En *vivo*", hint: "Para una palabra en rojo, ponela entre asteriscos." }
+              - { name: texto, label: "Bajada (opcional)", widget: string, required: false }
           - name: newsletter
             label: "Newsletter"
             widget: object
