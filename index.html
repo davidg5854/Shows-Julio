@@ -67,7 +67,7 @@
     <span></span><span></span><span></span>
   </button>
   <div class="nav__links" id="menu">
-    <a href="#inicio">Inicio</a><a href="#fechas">Fechas</a><a href="#sobre">Bio</a><a href="#news">Newsletter</a><a href="#contacto">Contacto</a>
+    <a href="#inicio">Inicio</a><a href="#fechas">Fechas</a><a href="#video" data-nav="video" hidden>Video</a><a href="#sobre">Bio</a><a href="#news">Newsletter</a><a href="#contacto">Contacto</a>
   </div>
 </nav>
 
@@ -97,6 +97,20 @@
   <p class="subt">Julio y Sus Amigos · asegura tu lugar</p>
   <div class="fechas" id="fechas-lista" aria-live="polite">
     <p class="ticket__cargando">Cargando fechas…</p>
+  </div>
+</section>
+
+<!-- Video: la miniatura se muestra sola y YouTube recién carga al darle play -->
+<section class="seccion" id="video" hidden>
+  <h2 class="titulo display" id="video-titulo">En <em>vivo</em></h2>
+  <p class="subt" id="video-texto"></p>
+  <div class="video__marco">
+    <button class="video__boton" type="button" id="video-boton" aria-label="Reproducir el video">
+      <img class="video__miniatura" id="video-miniatura" src="" alt="" width="1280" height="720" />
+      <span class="video__play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+    </button>
   </div>
 </section>
 

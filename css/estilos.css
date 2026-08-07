@@ -40,7 +40,9 @@
   .nav__toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .nav__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
   .nav__toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  @media (max-width: 640px) {
+  /* Con seis secciones, en pantallas medianas conviene el menú desplegable
+     para que los enlaces no se corten en dos líneas. */
+  @media (max-width: 820px) {
     .nav__toggle { display: block; }
     .nav__links { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0;
       background: color-mix(in srgb, var(--tinta) 96%, transparent); backdrop-filter: blur(8px);
@@ -112,6 +114,21 @@
     /* En pantallas chicas el país va en su propia línea, más pequeño */
     .ticket__pais { display: block; font-size: 0.62rem; vertical-align: 0; margin-top: 0.15rem; }
   }
+
+  /* ---------- Video ---------- */
+  .video__marco { position: relative; aspect-ratio: 16 / 9; border: 3px solid var(--hueso);
+    overflow: hidden; background: #000; margin-top: 0.6rem; }
+  .video__boton { display: block; width: 100%; height: 100%; padding: 0; border: 0;
+    background: none; cursor: pointer; position: relative; }
+  .video__miniatura { width: 100%; height: 100%; object-fit: cover; opacity: 0.82; transition: opacity 0.25s, transform 0.4s; }
+  .video__boton:hover .video__miniatura { opacity: 1; transform: scale(1.02); }
+  .video__play { position: absolute; inset: 0; margin: auto; width: 84px; height: 84px; border-radius: 50%;
+    background: var(--rojo); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 26px rgba(0,0,0,0.5); transition: transform 0.2s, background 0.2s; }
+  .video__play svg { width: 42px; height: 42px; fill: #fff; margin-left: 4px; }
+  .video__boton:hover .video__play { transform: scale(1.08); background: var(--rojo-osc); }
+  .video__marco iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  @media (max-width: 680px) { .video__play { width: 62px; height: 62px; } .video__play svg { width: 30px; height: 30px; } }
 
   .sobre { border-top: 3px solid var(--hueso); border-bottom: 3px solid var(--hueso); }
   .sobre__grid { max-width: var(--ancho); margin: 0 auto; padding: clamp(3rem,7vw,5rem) var(--margen);

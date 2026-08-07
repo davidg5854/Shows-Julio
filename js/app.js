@@ -377,6 +377,8 @@ function aplicarContenido(c) {
       if (t) t.innerHTML = formatoParrafos(c.bio.texto);
     }
   }
+  // Video
+  aplicarVideo(c.video);
   // Newsletter
   if (c.newsletter) {
     if (c.newsletter.titulo) {
@@ -388,6 +390,66 @@ function aplicarContenido(c) {
       if (p) p.innerHTML = formatoInline(c.newsletter.texto);
     }
   }
+}
+
+/* ---------- Video de YouTube (carga diferida) ---------- */
+// Acepta el enlace completo o solo el identificador del video.
+function extraerIdYoutube(valor) {
+  if (!valor) return "";
+  const t = String(valor).trim();
+  if (/^[\w-]{11}$/.test(t)) return t;
+  const m = t.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/);
+  return m ? m[1] : "";
+}
+
+function aplicarVideo(video) {
+  const seccion = document.getElementById("video");
+  const enlaceNav = document.querySelector('[data-nav="video"]');
+  if (!seccion) return;
+
+  const id = extraerIdYoutube(video && video.youtube);
+  if (!id) return; // sin video configurado, la sección queda oculta
+
+  if (video.titulo) {
+    const t = document.getElementById("video-titulo");
+    if (t) t.innerHTML = formatoInline(video.titulo);
+  }
+  const texto = document.getElementById("video-texto");
+  if (texto) {
+    if (video.texto) texto.textContent = video.texto;
+    else texto.remove();
+  }
+
+  // Miniatura de YouTube (dominio sin cookies), con respaldo de menor tamaño
+  const mini = document.getElementById("video-miniatura");
+  if (mini) {
+    mini.src = "https://i.ytimg.com/vi/" + id + "/maxresdefault.jpg";
+    mini.alt = "Julio Alfonzo en vivo";
+    mini.addEventListener("error", function () {
+      if (mini.dataset.respaldo) return;
+      mini.dataset.respaldo = "1";
+      mini.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+    });
+  }
+
+  // Al darle play se inserta el reproductor (recién ahí carga YouTube)
+  const boton = document.getElementById("video-boton");
+  if (boton) {
+    boton.addEventListener("click", function () {
+      const marco = boton.parentElement;
+      const iframe = document.createElement("iframe");
+      iframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0";
+      iframe.title = "Julio Alfonzo en vivo";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      marco.innerHTML = "";
+      marco.appendChild(iframe);
+      if (typeof window.gtag === "function") window.gtag("event", "play_video");
+    });
+  }
+
+  seccion.hidden = false;
+  if (enlaceNav) enlaceNav.hidden = false;
 }
 
 cargarConfig();
