@@ -2,14 +2,14 @@
   "shows": [
     {
       "fecha": "2026-08-15",
-      "ciudad": "Barquisimeto",
+      "ciudad": "Barquisimeto (NUEVA FUNCIÓN)",
       "pais": "Venezuela",
       "lugar": "Andrea Chill & Bar",
-      "hora": "21:00",
+      "hora": "19:00",
       "tipo": "pago",
       "estado": "disponible",
       "etiqueta": "",
-      "entradas": "https://ticketplate.com/checkout/julio-y-sus-amigos-202608152100",
+      "entradas": "https://ticketplate.com/checkout/julio-y-sus-amigos-202608151900",
       "boton": "Entradas"
     },
     {
