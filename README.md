@@ -16,7 +16,8 @@ código).
 1. Entrá a **https://julioalfonzo.com/admin/**
 2. Iniciá sesión con **GitHub**.
 3. Vas a ver tres secciones:
-   - **Fechas / Shows** → agregar, editar o quitar shows.
+   - **Fechas / Shows** → agregar, editar o quitar shows, y el mensaje que se
+     muestra cuando no hay ninguna fecha futura.
    - **Configuración del sitio** → IDs de analítica, redes sociales y correo.
    - **Textos y fotos** → textos de la portada, la bio y el newsletter, y las fotos.
 4. Hacé tus cambios y tocá **Publicar**.
@@ -92,6 +93,7 @@ con una lista `shows`:
     {
       "fecha": "2026-08-06",
       "ciudad": "Buenos Aires",
+      "pais": "Argentina",
       "lugar": "Factoría Social Club · Fragata Sarmiento",
       "hora": "21:00",
       "tipo": "pago",
@@ -100,7 +102,10 @@ con una lista `shows`:
       "entradas": "https://...",
       "boton": "Entradas"
     }
-  ]
+  ],
+  "textos": {
+    "vacio": "Pronto anunciamos nuevas fechas. ¡Seguime en redes!"
+  }
 }
 ```
 
@@ -108,6 +113,7 @@ con una lista `shows`:
 |------------|-------------|-------------|
 | `fecha`    | Sí          | `AAAA-MM-DD`. Se ordenan solas y las fechas pasadas se ocultan. |
 | `ciudad`   | Sí          | Título grande de la tarjeta (ej. Buenos Aires). |
+| `pais`     | No          | Se muestra al lado de la ciudad, más chico (ej. Argentina). |
 | `lugar`    | Sí          | Local o teatro. |
 | `hora`     | No          | Ej. `21:00`. Se muestra junto al lugar. |
 | `tipo`     | Sí          | `"pago"` o `"gratis"`. |
@@ -115,6 +121,18 @@ con una lista `shows`:
 | `etiqueta` | No          | Texto de la pastilla (ej. `Reservas gratis`). Vacío = "Entradas a la venta". |
 | `entradas` | Sí          | **El enlace del botón.** Sirve cualquier URL (ver abajo). |
 | `boton`    | No          | Texto del botón. Por defecto: "Entradas". |
+
+### Fechas pasadas y el mensaje de "no hay fechas"
+
+La web muestra **solo las fechas futuras**: cuando un show pasa, desaparece solo
+del sitio, pero **sigue guardado** en `shows.json` (no hay que borrar nada).
+
+Para que eso se entienda en el panel, en la lista de shows las fechas que ya
+pasaron aparecen en gris y con una pastilla roja **«ya pasó»**.
+
+Si no queda ninguna fecha futura, en lugar de la lista se muestra el texto de
+`textos.vacio`. Se edita en el panel, al final de **Fechas / Shows**, en
+*Mensaje cuando no hay fechas*. Admite `*cursiva*` y `**negrita**`.
 
 ### El campo `entradas` acepta cualquier enlace
 

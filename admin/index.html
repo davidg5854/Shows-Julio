@@ -25,6 +25,14 @@
     /* El botón que pliega/despliega solo hace falta en pantallas chicas */
     #barra-julio #toggle-julio { display: none; }
 
+    /* Distintivo para las fechas que ya pasaron y no se ven en la web */
+    .julio-pasado {
+      display: inline-block; margin-left: 8px; padding: 1px 7px;
+      border-radius: 999px; background: #e5372b; color: #fff;
+      font-size: 10px; font-weight: 700; letter-spacing: .04em;
+      text-transform: uppercase; vertical-align: 1px; white-space: nowrap;
+    }
+
     @media (max-width: 700px) {
       /* Se sube para no tapar la barra de navegación del panel */
       #barra-julio { bottom: 84px; right: 10px; flex-direction: column; align-items: flex-end; }
@@ -103,6 +111,51 @@
         btn.textContent = textoOriginal;
         btn.disabled = false;
       });
+    })();
+  </script>
+
+  <script>
+    // Marca en la lista de fechas las que ya pasaron: siguen guardadas
+    // pero la web solo muestra las futuras. Sveltia no permite condiciones
+    // en el resumen, así que se marca acá al vuelo.
+    (function () {
+      var PATRON = /^\s*(\d{4})-(\d{2})-(\d{2})\s*·/;
+
+      function esPasada(texto) {
+        var m = PATRON.exec(texto);
+        if (!m) return null;
+        var fecha = new Date(+m[1], +m[2] - 1, +m[3]);
+        var hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        return fecha < hoy;
+      }
+
+      function marcar() {
+        var nodos = document.querySelectorAll("div, span, p, h1, h2, h3, h4, h5, h6, button, summary");
+        for (var i = 0; i < nodos.length; i++) {
+          var el = nodos[i];
+          if (el.children.length || el.dataset.julioPasado) continue;
+          var pasada = esPasada(el.textContent || "");
+          if (pasada !== true) continue;
+          el.dataset.julioPasado = "1";
+          el.style.opacity = "0.55";
+          var etiqueta = document.createElement("span");
+          etiqueta.className = "julio-pasado";
+          etiqueta.textContent = "ya pasó";
+          etiqueta.title = "Esta fecha ya pasó: sigue guardada acá, pero no se muestra en la web.";
+          el.appendChild(etiqueta);
+        }
+      }
+
+      var pendiente = false;
+      function agendar() {
+        if (pendiente) return;
+        pendiente = true;
+        requestAnimationFrame(function () { pendiente = false; marcar(); });
+      }
+
+      new MutationObserver(agendar).observe(document.body, { childList: true, subtree: true });
+      agendar();
     })();
   </script>
 </body>
