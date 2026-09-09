@@ -27,7 +27,7 @@ collections:
       - name: shows
         label: "Próximas fechas"
         file: "datos/shows.json"
-        description: "Agregá, editá o quitá los shows. Se ordenan por fecha automáticamente en la web y las fechas pasadas dejan de mostrarse solas."
+        description: "Agregá, editá o quitá los shows. Se ordenan por fecha automáticamente en la web. Las fechas que ya pasaron se marcan con «ya pasó» y dejan de mostrarse en la web, aunque sigan guardadas acá. Si no queda ninguna fecha futura, la web muestra el mensaje del final de esta página."
         fields:
           - name: shows
             label: "Shows"
@@ -45,6 +45,11 @@ collections:
               - { name: etiqueta, label: "Etiqueta (opcional)", widget: string, required: false, hint: "Ejemplo: Reservas gratis. Si lo dejás vacío, muestra 'Entradas a la venta'." }
               - { name: entradas, label: "Link de entradas", widget: string, hint: "El enlace donde se compran/reservan las entradas." }
               - { name: boton, label: "Texto del botón", widget: string, default: "Entradas", required: false }
+          - name: textos
+            label: "Mensaje cuando no hay fechas"
+            widget: object
+            fields:
+              - { name: vacio, label: "Texto a mostrar", widget: string, default: "Pronto anunciamos nuevas fechas. ¡Seguime en redes!", hint: "Aparece en la web cuando no queda ninguna fecha futura en la lista de arriba. Podés usar *cursiva* y **negrita**." }
 
   # ---------- Configuración del sitio ----------
   - name: config

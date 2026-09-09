@@ -24,5 +24,8 @@
       "entradas": "https://wa.link/nd9y4f",
       "boton": "Entradas"
     }
-  ]
+  ],
+  "textos": {
+    "vacio": "Pronto anunciamos nuevas fechas. ¡Seguime en redes!"
+  }
 }

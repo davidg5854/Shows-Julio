@@ -57,6 +57,9 @@ function pintarShow(show) {
     </article>`;
 }
 
+// Texto de respaldo si el panel no definió uno propio
+const VACIO_DEFECTO = "Pronto anunciamos nuevas fechas. ¡Seguime en redes!";
+
 async function cargarShows() {
   const contenedor = document.getElementById("fechas-lista");
   if (!contenedor) return;
@@ -74,7 +77,9 @@ async function cargarShows() {
       .sort((a, b) => parsearFecha(a.fecha) - parsearFecha(b.fecha));
 
     if (proximos.length === 0) {
-      contenedor.innerHTML = `<p class="ticket__vacio">Pronto anunciamos nuevas fechas. ¡Seguime en redes!</p>`;
+      // Mensaje editable desde el panel (datos/shows.json → textos.vacio)
+      const vacio = (datos && datos.textos && datos.textos.vacio) || VACIO_DEFECTO;
+      contenedor.innerHTML = `<p class="ticket__vacio">${formatoInline(vacio)}</p>`;
       return;
     }
 
