@@ -1,16 +1,16 @@
 {
   "shows": [
     {
-      "fecha": "2026-08-15",
-      "ciudad": "Barquisimeto (NUEVA FUNCIÓN)",
-      "pais": "Venezuela",
-      "lugar": "Andrea Chill & Bar",
-      "hora": "19:00",
-      "tipo": "pago",
-      "estado": "agotado",
+      "fecha": "2026-09-24",
+      "ciudad": "Buenos Aires",
+      "pais": "Argentina",
+      "lugar": "Factoría Social Club - Fragata Sarmiento 1251",
+      "hora": "21:00",
+      "tipo": "gratis",
+      "estado": "disponible",
       "etiqueta": "",
-      "entradas": "https://ticketplate.com/checkout/julio-y-sus-amigos-202608151900",
-      "boton": "Entradas"
+      "entradas": "https://compras.evento-simple.com/factoria/eventos/julio-y-sus-amigos-show-de-stand-up-e55",
+      "boton": "Reservas gratis"
     },
     {
       "fecha": "2026-08-16",
