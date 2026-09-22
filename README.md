@@ -77,7 +77,7 @@ Si tocás *Promover* y no hay nada nuevo, avisa que la web real ya está al día
 ├── img/                  → Fotos (ver img/LEEME.txt)
 ├── CNAME                 → Dominio (julioalfonzo.com)
 ├── robots.txt / sitemap.xml / llms.txt → SEO y buscadores/IA
-└── .github/workflows/desplegar.yml     → Publicación automática
+└── .nojekyll                          → Pages sirve los archivos tal cual
 ```
 
 ---
@@ -212,8 +212,12 @@ están los registros **MX**, **SPF** y **DMARC**.
 | 🧪 **Prueba** | `staging` | julio-staging.pages.dev (Cloudflare Pages) | Revisar antes de publicar |
 
 - El panel de administración escribe siempre en **`staging`**.
-- **Promover** hace el merge de `staging` a `main`; ese push dispara el workflow
-  `.github/workflows/desplegar.yml`, que publica en GitHub Pages.
+- **Promover** hace el merge de `staging` a `main`; ese push lo toma el
+  publicador propio de GitHub Pages, que sube el sitio tal cual. No usa
+  GitHub Actions, así que no consume minutos ni almacenamiento.
+- En **Settings → Pages**, la fuente debe estar en *Deploy from a branch*,
+  rama `main`, carpeta `/ (root)`. El archivo `.nojekyll` evita que Pages
+  procese el sitio con Jekyll y lo publica igual a como está en el repo.
 - El dominio se conecta con el archivo `CNAME` + los registros DNS (A hacia las
   IP de GitHub Pages y CNAME de `www`).
 
