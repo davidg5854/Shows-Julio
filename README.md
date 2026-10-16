@@ -119,8 +119,23 @@ con una lista `shows`:
 | `tipo`     | Sí          | `"pago"` o `"gratis"`. |
 | `estado`   | Sí          | `"disponible"`, `"agotado"` o `"proximamente"`. |
 | `etiqueta` | No          | Texto de la pastilla (ej. `Reservas gratis`). Vacío = "Entradas a la venta". |
+| `precio`   | No          | Solo el número, sin símbolos (ej. `15000`). Se usa para Google, no se muestra en la web. |
+| `moneda`   | No          | Moneda del precio: `ARS`, `USD`, `VES`, `EUR`, `COP` o `MXN`. |
 | `entradas` | Sí          | **El enlace del botón.** Sirve cualquier URL (ver abajo). |
 | `boton`    | No          | Texto del botón. Por defecto: "Entradas". |
+
+### Precio y datos estructurados (Google)
+
+Cada show futuro se publica también como **ComedyEvent** de Schema.org, que es
+lo que Google usa para mostrar los shows como eventos en el buscador.
+
+El campo `precio` no se muestra en la web: sirve solo para esos datos. Los
+shows con `tipo: "gratis"` se publican con precio `0` automáticamente. Si un
+show es pago y dejás `precio` vacío, simplemente no se declara precio — nunca
+se inventa uno.
+
+La hora de finalización se estima en **2 horas** después del comienzo
+(`DURACION_SHOW_HORAS` en `js/app.js`).
 
 ### Fechas pasadas y el mensaje de "no hay fechas"
 
