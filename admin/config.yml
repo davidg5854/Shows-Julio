@@ -43,6 +43,8 @@ collections:
               - { name: tipo, label: "Tipo de entrada", widget: select, options: ["pago", "gratis"], default: "pago" }
               - { name: estado, label: "Estado", widget: select, options: ["disponible", "agotado", "proximamente"], default: "disponible" }
               - { name: etiqueta, label: "Etiqueta (opcional)", widget: string, required: false, hint: "Ejemplo: Reservas gratis. Si lo dejás vacío, muestra 'Entradas a la venta'." }
+              - { name: precio, label: "Precio (opcional)", widget: string, required: false, hint: "Solo el número, sin símbolos. Ej: 15000. Si el show es gratis no hace falta. Si lo dejás vacío, Google no muestra precio." }
+              - { name: moneda, label: "Moneda", widget: select, options: ["ARS", "USD", "VES", "EUR", "COP", "MXN"], default: "ARS", required: false, hint: "La moneda del precio de arriba." }
               - { name: entradas, label: "Link de entradas", widget: string, hint: "El enlace donde se compran/reservan las entradas." }
               - { name: boton, label: "Texto del botón", widget: string, default: "Entradas", required: false }
           - name: textos

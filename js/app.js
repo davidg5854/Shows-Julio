@@ -100,17 +100,76 @@ async function cargarShows() {
 }
 
 // Datos estructurados (Schema.org ComedyEvent) de cada show para buscadores
+
+// Duración estimada de un show, para calcular la hora de finalización
+const DURACION_SHOW_HORAS = 2;
+
+// Fecha en formato ISO 8601 SIN zona horaria: "2027-03-10T21:00:00".
+// Es la hora local del lugar del show. Si usáramos toISOString() la hora
+// se convertiría a UTC según el navegador de cada visitante y Google
+// terminaría viendo un horario distinto al real.
+function fechaLocalISO(d) {
+  const p2 = (n) => String(n).padStart(2, "0");
+  return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()) +
+    "T" + p2(d.getHours()) + ":" + p2(d.getMinutes()) + ":00";
+}
+
+// Dominio oficial del sitio (sale del canonical; si no, el actual)
+function origenCanonico() {
+  const link = document.querySelector('link[rel="canonical"]');
+  try {
+    return new URL(link ? link.href : location.href).origin;
+  } catch (e) {
+    return location.origin;
+  }
+}
+
+// Descripción legible de un show, para buscadores
+function descripcionShow(show, inicio) {
+  const donde = [show.lugar, show.ciudad, show.pais].filter(Boolean).join(", ");
+  const dia = inicio.getDate();
+  const mes = MESES[inicio.getMonth()];
+  const hora = show.hora || "21:00";
+  return `Julio Alfonzo presenta su show de stand-up "Julio y Sus Amigos" en ${donde}. ` +
+    `${dia} de ${mes} de ${inicio.getFullYear()}, ${hora}.`;
+}
+
 function inyectarEventosSEO(shows) {
+  const origen = origenCanonico();
   const eventos = shows.map((s) => {
     const fecha = parsearFecha(s.fecha);
     const inicio = new Date(fecha);
     const [h, m] = (s.hora || "21:00").split(":").map(Number);
     inicio.setHours(h || 21, m || 0, 0, 0);
+
+    // Hora estimada de finalización (Google pide endDate)
+    const fin = new Date(inicio.getTime() + DURACION_SHOW_HORAS * 3600 * 1000);
+
+    // Precio: los shows gratis valen 0; los pagos, lo que se cargue en el panel
+    const gratis = s.tipo === "gratis";
+    const precio = gratis ? "0" : String(s.precio == null ? "" : s.precio).trim();
+
+    const oferta = {
+      "@type": "Offer",
+      "url": s.entradas,
+      "availability": s.estado === "agotado"
+        ? "https://schema.org/SoldOut"
+        : "https://schema.org/InStock",
+    };
+    // Solo se declara el precio si lo sabemos; nunca se inventa uno
+    if (precio !== "") {
+      oferta.price = precio;
+      oferta.priceCurrency = s.moneda || "USD";
+    }
+
     return {
       "@context": "https://schema.org",
       "@type": "ComedyEvent",
       "name": "Julio y Sus Amigos — Stand-Up de Julio Alfonzo",
-      "startDate": inicio.toISOString(),
+      "description": descripcionShow(s, inicio),
+      "image": [origen + "/img/og.jpg"],
+      "startDate": fechaLocalISO(inicio),
+      "endDate": fechaLocalISO(fin),
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "location": {
@@ -121,16 +180,10 @@ function inyectarEventosSEO(shows) {
           s.pais ? { addressCountry: s.pais } : {}
         ),
       },
-      "performer": { "@type": "Person", "name": "Julio Alfonzo" },
-      "organizer": { "@type": "Person", "name": "Julio Alfonzo" },
+      "performer": { "@type": "Person", "name": "Julio Alfonzo", "url": origen },
+      "organizer": { "@type": "Person", "name": "Julio Alfonzo", "url": origen },
       "url": s.entradas,
-      "offers": {
-        "@type": "Offer",
-        "url": s.entradas,
-        "availability": s.estado === "agotado"
-          ? "https://schema.org/SoldOut"
-          : "https://schema.org/InStock",
-      },
+      "offers": oferta,
     };
   });
   const script = document.createElement("script");
