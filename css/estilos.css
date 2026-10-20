@@ -33,7 +33,7 @@
   .nav__logo b { color: var(--rojo); font-weight: 400; }
   .nav__links { display: flex; gap: 1.3rem; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; }
   .nav__links a { color: var(--humo); transition: color 0.2s; }
-  .nav__links a:hover { color: var(--rojo); }
+  .nav__links a:hover, .nav__links a:focus-visible { color: var(--rojo); }
   .nav__toggle { display: none; background: none; border: 0; cursor: pointer; width: 34px; height: 28px; position: relative; }
   .nav__toggle span { position: absolute; left: 3px; right: 3px; height: 2px; background: var(--hueso); transition: transform 0.25s, opacity 0.25s; }
   .nav__toggle span:nth-child(1) { top: 6px; } .nav__toggle span:nth-child(2) { top: 13px; } .nav__toggle span:nth-child(3) { top: 20px; }
@@ -75,9 +75,9 @@
   .btn { display: inline-block; padding: 0.85rem 1.7rem; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
     border: 2px solid transparent; cursor: pointer; transition: transform 0.15s, background 0.2s, color 0.2s; }
   .btn--rojo { background: var(--rojo); color: #fff; }
-  .btn--rojo:hover { background: var(--rojo-osc); transform: translateY(-2px); }
+  .btn--rojo:hover, .btn--rojo:focus-visible { background: var(--rojo-osc); transform: translateY(-2px); }
   .btn--linea { border-color: var(--hueso); color: var(--hueso); background: transparent; }
-  .btn--linea:hover { background: var(--hueso); color: var(--tinta); }
+  .btn--linea:hover, .btn--linea:focus-visible { background: var(--hueso); color: var(--tinta); }
 
   /* ---------- Marquesina a todo el ancho (v1) ---------- */
   .marquesina { background: var(--rojo); color: var(--hueso); border-bottom: 3px solid var(--hueso); overflow: hidden; padding: 0.6rem 0; }
@@ -121,12 +121,12 @@
   .video__boton { display: block; width: 100%; height: 100%; padding: 0; border: 0;
     background: none; cursor: pointer; position: relative; }
   .video__miniatura { width: 100%; height: 100%; object-fit: cover; opacity: 0.82; transition: opacity 0.25s, transform 0.4s; }
-  .video__boton:hover .video__miniatura { opacity: 1; transform: scale(1.02); }
+  .video__boton:hover .video__miniatura, .video__boton:focus-visible .video__miniatura { opacity: 1; transform: scale(1.02); }
   .video__play { position: absolute; inset: 0; margin: auto; width: 84px; height: 84px; border-radius: 50%;
     background: var(--rojo); display: flex; align-items: center; justify-content: center;
     box-shadow: 0 6px 26px rgba(0,0,0,0.5); transition: transform 0.2s, background 0.2s; }
   .video__play svg { width: 42px; height: 42px; fill: #fff; margin-left: 4px; }
-  .video__boton:hover .video__play { transform: scale(1.08); background: var(--rojo-osc); }
+  .video__boton:hover .video__play, .video__boton:focus-visible .video__play { transform: scale(1.08); background: var(--rojo-osc); }
   .video__marco iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   @media (max-width: 680px) { .video__play { width: 62px; height: 62px; } .video__play svg { width: 30px; height: 30px; } }
 
@@ -160,13 +160,13 @@
   .pie__mail { color: var(--rojo); font-weight: 700; font-size: 1.1rem; }
   .pie__redes { display: flex; flex-wrap: wrap; gap: 1.4rem; align-items: center; }
   .pie__redes a { color: var(--humo); display: inline-flex; transition: color 0.2s, transform 0.2s; }
-  .pie__redes a:hover { color: var(--rojo); transform: translateY(-2px); }
+  .pie__redes a:hover, .pie__redes a:focus-visible { color: var(--rojo); transform: translateY(-2px); }
   .pie__redes svg { width: 26px; height: 26px; fill: currentColor; display: block; }
   .pie > div:last-child { text-align: right; }
   .pie > div:last-child .pie__redes { justify-content: flex-end; }
   .pie__copy { border-top: 2px solid var(--borde); margin-top: 1rem; padding: 1.2rem var(--margen); text-align: center; color: var(--humo); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
   .pie__copy a { color: var(--humo); text-decoration: underline; }
-  .pie__copy a:hover { color: var(--rojo); }
+  .pie__copy a:hover, .pie__copy a:focus-visible { color: var(--rojo); }
   @media (max-width: 640px) { .pie { grid-template-columns: 1fr; }
     .pie > div:last-child { text-align: left; } .pie > div:last-child .pie__redes { justify-content: flex-start; } }
 
@@ -184,20 +184,15 @@
   .ticket__cargando, .ticket__vacio { color: var(--humo); padding: 1rem 0; }
   .cartel__bg { background-image: url('../img/hero.jpg'); }
 
+
   /* ---------- Foco del teclado ----------
-     Sin esto el navegador dibuja su contorno por defecto (casi negro)
-     sobre el fondo negro del sitio: queda invisible y quien navega con
-     Tab no sabe dónde está parado.
-     Se usa :focus-visible para que el anillo aparezca al navegar con
-     teclado pero no al hacer clic con el mouse.
-     El outline-offset lo deja por fuera del elemento, así se recorta
-     contra el fondo de la página; el box-shadow oscuro lo separa del
-     elemento para que también se lea sobre la foto del hero. */
+     El contorno por defecto del navegador es casi negro sobre el fondo
+     negro del sitio: invisible. Se reemplaza por uno fino color hueso.
+     Va con :focus-visible, así aparece al navegar con Tab pero no al
+     hacer clic con el mouse. Además, los elementos con :hover repiten
+     ese mismo efecto al enfocarse (ver las reglas de arriba), de modo
+     que el menú y los botones también se ponen rojos con el teclado. */
   :focus-visible {
-    outline: 3px solid var(--hueso);
-    outline-offset: 3px;
-    box-shadow: 0 0 0 3px var(--tinta);
-    border-radius: 2px;
+    outline: 2px solid var(--hueso);
+    outline-offset: 2px;
   }
-  /* Los botones ya son redondeados: el anillo acompaña su forma */
-  .btn:focus-visible { border-radius: 999px; }
