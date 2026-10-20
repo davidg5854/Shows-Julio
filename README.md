@@ -74,7 +74,7 @@ Si tocás *Promover* y no hay nada nuevo, avisa que la web real ya está al día
 │   └── promover.html     → Promoción manual (respaldo, por si falla el botón)
 ├── promotor/worker.js    → Servicio que publica de staging a producción
 ├── fonts/bebas.woff2     → Tipografía de títulos (autoalojada)
-├── img/                  → Fotos (ver img/LEEME.txt)
+├── img/                  → Fotos en JPEG + WebP (ver img/LEEME.txt)
 ├── CNAME                 → Dominio (julioalfonzo.com)
 ├── robots.txt / sitemap.xml / llms.txt → SEO y buscadores/IA
 └── .nojekyll                          → Pages sirve los archivos tal cual
@@ -275,3 +275,8 @@ Luego abrí `http://localhost:8000`.
 - **Colores:** variables al inicio de `css/estilos.css`.
 - **Textos y fotos:** desde el panel (sección *Textos y fotos*) o en `datos/contenido.json`.
 - **Imagen para compartir (og):** es `img/og.jpg` (ver `img/LEEME.txt`).
+  Se queda en JPEG a propósito: WhatsApp y Facebook no siempre leen WebP.
+- **Portada y bio** tienen versión `.webp` además del `.jpg`. El navegador
+  elige la que entienda: WebP pesa la mitad y el JPEG queda de respaldo.
+  Si desde el panel se sube otra foto, el sitio la usa tal cual y no busca
+  una versión WebP (ver `FOTOS_DEFECTO` en `js/app.js`).

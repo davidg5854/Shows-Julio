@@ -4,9 +4,22 @@ IMÁGENES DEL SITIO
 Estas imágenes ya están cargadas y optimizadas para web. Si quieres cambiar
 alguna, mantén el mismo nombre y a poder ser un peso bajo (idealmente < 300 KB).
 
-- hero.jpg      → Foto de fondo de la portada (la primera que se ve).
-- bio.jpg       → Foto vertical de la sección "Sobre Julio".
-- og.jpg        → Imagen para compartir en redes/WhatsApp (1200 x 630 px).
+- hero.jpg / hero.webp  → Foto de fondo de la portada (la primera que se ve).
+- bio.jpg  / bio.webp   → Foto vertical de la sección "Sobre Julio".
+- og.jpg                → Imagen para compartir en redes/WhatsApp (1200 x 630 px).
 
-Consejo: antes de subir una foto nueva, compáctala en https://squoosh.app
-para que el sitio cargue rápido.
+POR QUÉ HAY DOS VERSIONES DE CADA UNA
+-------------------------------------
+WebP pesa alrededor de la mitad que JPEG con la misma calidad. El navegador
+elige sola la versión WebP si la entiende (casi todos hoy), y si no, usa el
+JPEG. Por eso conviene que las dos existan y muestren la misma foto.
+
+og.jpg NO tiene versión WebP a propósito: WhatsApp y Facebook no siempre
+leen WebP en las vistas previas, así que esa se queda en JPEG.
+
+SI SUBES UNA FOTO NUEVA DESDE EL PANEL
+--------------------------------------
+No hace falta que hagas nada más: el sitio detecta que es una foto distinta
+a las de fábrica y la usa tal cual, sin buscarle una versión WebP.
+Eso sí, compáctala antes en https://squoosh.app para que el sitio siga
+cargando rápido. Ahí también puedes exportarla directo en WebP.
