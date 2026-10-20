@@ -182,7 +182,11 @@
   .cookies__btns { display: flex; gap: 0.6rem; }
   .cookies .btn { padding: 0.6rem 1.3rem; }
   .ticket__cargando, .ticket__vacio { color: var(--humo); padding: 1rem 0; }
-  .cartel__bg { background-image: url('../img/hero.jpg'); }
+  /* La primera línea es el respaldo para navegadores sin WebP;
+     la segunda hace que los que sí lo soportan bajen 58 KB en vez de 193 KB. */
+  .cartel__bg { background-image: url('../img/hero.jpg');
+    background-image: image-set(url('../img/hero.webp') type('image/webp'),
+                                url('../img/hero.jpg') type('image/jpeg')); }
 
 
   /* ---------- Foco del teclado ----------

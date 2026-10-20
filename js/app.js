@@ -390,6 +390,9 @@ function formatoParrafos(t) {
     .join("");
 }
 
+// Rutas de las fotos que vienen con el sitio (tienen versión WebP en el HTML/CSS)
+const FOTOS_DEFECTO = { hero: "img/hero.jpg", bio: "img/bio.jpg" };
+
 async function cargarContenido() {
   let c;
   try {
@@ -408,14 +411,25 @@ function aplicarContenido(c) {
     if (eb) eb.textContent = c.hero.eyebrow;
   }
   // Fotos
+  // Las de fábrica ya vienen en el HTML y el CSS en WebP con respaldo JPEG,
+  // así que solo se tocan si desde el panel se subió otra distinta. Si se
+  // pisaran siempre, el navegador se quedaría con el JPEG pesado.
   if (c.imagenes) {
-    if (c.imagenes.hero) {
+    if (c.imagenes.hero && c.imagenes.hero !== FOTOS_DEFECTO.hero) {
       const bg = document.querySelector(".cartel__bg");
       if (bg) bg.style.backgroundImage = "url('" + c.imagenes.hero + "')";
     }
-    if (c.imagenes.bio) {
+    if (c.imagenes.bio && c.imagenes.bio !== FOTOS_DEFECTO.bio) {
       const img = document.querySelector(".sobre__foto img");
-      if (img) img.setAttribute("src", c.imagenes.bio);
+      if (img) {
+        img.setAttribute("src", c.imagenes.bio);
+        // La foto nueva no tiene gemela en WebP: se descartan esas fuentes
+        // o el navegador seguiría mostrando la vieja.
+        const marco = img.parentElement;
+        if (marco && marco.tagName === "PICTURE") {
+          marco.querySelectorAll("source").forEach((f) => f.remove());
+        }
+      }
     }
   }
   // Bio
