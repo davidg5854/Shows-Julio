@@ -183,3 +183,21 @@
   .cookies .btn { padding: 0.6rem 1.3rem; }
   .ticket__cargando, .ticket__vacio { color: var(--humo); padding: 1rem 0; }
   .cartel__bg { background-image: url('../img/hero.jpg'); }
+
+  /* ---------- Foco del teclado ----------
+     Sin esto el navegador dibuja su contorno por defecto (casi negro)
+     sobre el fondo negro del sitio: queda invisible y quien navega con
+     Tab no sabe dónde está parado.
+     Se usa :focus-visible para que el anillo aparezca al navegar con
+     teclado pero no al hacer clic con el mouse.
+     El outline-offset lo deja por fuera del elemento, así se recorta
+     contra el fondo de la página; el box-shadow oscuro lo separa del
+     elemento para que también se lea sobre la foto del hero. */
+  :focus-visible {
+    outline: 3px solid var(--hueso);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px var(--tinta);
+    border-radius: 2px;
+  }
+  /* Los botones ya son redondeados: el anillo acompaña su forma */
+  .btn:focus-visible { border-radius: 999px; }
